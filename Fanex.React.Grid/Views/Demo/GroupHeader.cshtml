@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css
+{
+    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
+}
+@section jsx
+{
+    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-group-header-grid.js")"></script>
+}
+<ul>
+    <li>
+        <h2>Demo</h2>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-row" value="220" />
+            @*<input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />*@
+            <input type="button" value="Render" onclick="getGridOptionsFromClient();" />
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h2>Source</h2>
+        <div>            
+            - set 2 properties:<br />
+            <textarea rows="20" cols="120" readonly="readonly">
+GroupHeaders: [
+    {"Index":0,"Name":"ColumnIndex","Width":60,"MergeRowNumber":2,"Text":"#","TextAlign":2,"TdClass":null},
+    {"Index":1,"Name":"ColumnDate","Width":100,"MergeRowNumber":2,"Text":"Date","TextAlign":2,"TdClass":null},
+    {"Index":2,"Name":"ColumnText","Width":250,"MergeRowNumber":2,"Text":"Text","TextAlign":2,"TdClass":null},
+    {"Index":3,"Name":"ColumnInteger","Width":100,"MergeColumnNumber":2,"Text":"Number","TextAlign":2,"TdClass":null},            
+    {"Index":5,"Name":"ColumnPercentage","Width":150,"MergeRowNumber":2,"Text":"Percentage","TextAlign":2,"TdClass":null}
+],
+HeaderColumns: [            
+    {"Index":3,"Name":"ColumnInteger","Width":100,"Text":"Integer","TextAlign":2,"TdClass":null},
+    {"Index":4,"Name":"ColumnDecimal","Width":150,"Text":"Decimal","TextAlign":2,"TdClass":null},            
+],
+            </textarea>
+        </div>
+    </li>
+</ul>

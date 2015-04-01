@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    React Grid Component</h2>
+<p>
+    You have reports within large data rows. You want to render the data grid faster
+    than normal way. Fanex.React.Grid Component is a solution.
+</p>
+<p>
+    In this tutorial I'm going to show you how to use Fanex.React.Grid component implemented
+    with Facebook's <a href="http://reactjs.net/">React</a> library. I use the JSX syntax to write the react grid
+    component. So let's @Html.ActionLink("get started", "GettingStarted", "Home").
+</p>
+<h3>Fanex.React.Grid's layout</h3>
+<img src="@Url.Content("~/Content/images/grid-layout.PNG")" />
+<h3>Parameters:</h3>
+<ul>
+    <li>
+        <b>ShowTitle:</b> Boolean value. If true, the data grid title will show. Default is false.        
+    </li>
+    <li>
+        <b>TitleText:</b> String value. The text you want to show at grid title. Default is empty.
+    </li>
+    <li>
+        <b>NoDataText:</b> String value. The text you want to show in gird when it doesn't have any records. Default is "No data.".
+    </li>
+    <li>
+        <b>ShowFooter:</b> Boolean value. If true, the grid footer will show. Default is false.
+    </li>
+    <li>
+        <b>OddEvenRow:</b> Boolean value. If true, the data grid odd and even row will show with different background color. Default is false. 
+    </li>
+    <li>
+        <b>IsHighlightHover:</b> Boolean value. If true, the content row will have high light background when hovered. Default is false.
+    </li>
+    <li>
+        <b>IsPaging:</b> Boolean value. If true, the paging control will show. Default is false.
+    </li>
+    <li>
+        <b>IsServerPaging:</b> Boolean value. It works when IsPaging = true. If true, your grid data will paging in the Server. Default is false.
+    </li>
+    <li>
+        <b>PagingOptions: </b> Object value. It works when IsPaging = true. Contain all paging properties.
+        <ul>
+            <li><b>PageIndex:</b> Integer value. Value of page index. Default is 0.</li>
+            <li><b>PageSize:</b> Integer value. Value of page size (number of rows in 1 page). Default is 100.</li>
+            <li><b>PageSizeList:</b> Array value. Array of PageSize. Default is [50, 100, 200, 500].</li>
+            <li><b>PagingCallBack:</b> Function type. If IsServerPaging is true, you must define this function to call back data after paging. Default is undefined.</li>
+            <li><b>NumberOfPage:</b> Integer value. Value of number of pages. Default is 0.</li>
+            <li><b>TotalItems:</b> Integer value. Value of total rows in grid (all pages). Default is 0.</li>
+        </ul>
+    </li>
+    <li>
+        <b>MaxContentHeight:</b> Integer value. Max height of the grid, when the grid's height is larger, the scroll bar will show. Default is 500.
+    </li>
+    <li>
+        <b>MaxContentWidth:</b> Integer value. Max width of the grid, when the grid's width is larger, the scroll bar will show. Default is 1000.
+    </li>
+    <li>
+        <b>GridWidth:</b> Integer value. Width of the grid. It's calculated by total of all column's width. Default is 0.
+    </li>
+    <li>
+        <b>ColumnWidthList:</b> List integer. List of column's width. The base width that all column in header, body and footer must follow. This is the most important property of ReactGrid so that it must be not null. Default is [].
+    </li>
+    <li>
+        <b>HeaderStyle:</b> Integer value. Number of header line. Default is 1.
+    </li>
+    <li>
+        <b>GroupHeaders:</b> Object array. Array of group header column cell. Each object contain a column. Default is [].        
+    </li>
+    <li>
+        <b>HeaderColumns:</b> Object array. Array of header column cell. Default is [].
+    </li>
+    <li>
+        <b>BodyRows:</b> Object array. Array of body column cell. Default is [].
+    </li>
+    <li>
+        <b>FooterRows:</b> Object array. Array of footer column cell. Default is [].
+    </li>
+</ul>

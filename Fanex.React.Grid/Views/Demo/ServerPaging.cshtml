@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css
+{
+    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
+}
+@section jsx
+{
+    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-server-paging.js")"></script>
+}
+<ul>
+    <li>
+        <h2>Demo</h2>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-row" value="220" />
+            @*<input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />*@
+            <input type="button" value="Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h2>Source</h2>
+        <div>            
+            - client code:<br />
+            <textarea rows="15" cols="120" readonly="readonly">
+function getGridOptionsFromServer() {
+   
+    var criteria = new FormData();
+    criteria.append('numOfRow', $("#num-of-row").val());
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', getClientUrl("demo/ServerPagingData"), true);
+    xhr.onload = function () {
+        var gridOptions = JSON.parse(xhr.responseText);
+        gridOptions.PagingOptions.PagingCallBack = getDataPagingCallBack;
+        React.render(
+            <ReactGrid gridOptions={gridOptions} containerId='react-grid' />,
+            document.getElementById('react-grid-server')
+        );
+    };
+    xhr.send(criteria);
+
+}
+
+function getDataPagingCallBack(pageIndex, pageSize) {
+    var result;
+    var criteria = new FormData();
+    criteria.append('numOfRow', $("#num-of-row").val());
+    criteria.append('pageIndex', pageIndex);
+    criteria.append('pageSize', pageSize);
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', getClientUrl("demo/ServerPagingData"), false);
+    xhr.onreadystatechange  = function () {
+
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+               result = JSON.parse(xhr.responseText);               
+            }
+        }
+    };
+    xhr.send(criteria);
+
+    return result;
+}
+            </textarea> <br />
+            - server code:<br />
+            <textarea rows="15" cols="120" readonly="readonly">
+public JsonResult ServerPagingData(int numOfRow, int pageIndex = 0, int pageSize = 100)
+{
+    var reactService = new FirstPageService();
+    var data = reactService.GetPagingGridOptions(numOfRow, pageIndex, pageSize);
+    var json = Json(data);
+    json.MaxJsonLength = int.MaxValue;
+    return json;
+}
+
+public GridOptions GetPagingGridOptions(int numOfRow, int pageIndex = 0, int pageSize = 100)
+{
+    var bodyRows = GetBodyRows(numOfRow);
+    var pagingBodyRows = bodyRows.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+    var gridOptions = new GridOptions
+    {
+        NoDataText = "No data",
+        MaxContentHeight = 250,
+        IsPaging = true,
+        IsServerPaging = true,
+        PagingOptions = new PagingOptions
+        {
+            PageIndex = pageIndex,
+            PageSize = pageSize,
+            PageSizeList = new List<int> { 50, 100, 200, 500 },
+            TotalItems = bodyRows.Count,
+        },
+        HeaderStyle = Fanex.React.Options.Formatter.HeaderStyle.HeaderOneLine,
+        HeaderColumns = GetHeader(),
+        BodyRows = pagingBodyRows,
+        FooterRows = GetFooterRows(),
+    };
+
+    return gridOptions;
+}
+            </textarea>
+        </div>
+    </li>
+</ul>

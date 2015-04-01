@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css
+{
+    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
+}
+@section jsx
+{
+    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-show-footer.js")"></script>
+}
+<ul>
+    <li>
+        <h2>Demo</h2>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-row" value="220" />
+            @*<input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />*@
+            <input type="button" value="Render" onclick="getGridOptionsFromClient();" />
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h2>Source</h2>
+        <div>            
+            - set 2 properties:<br />
+            <textarea rows="20" cols="120" readonly="readonly">
+ShowFooter: true,
+FooterRows: [{
+    "RowIndex":0,
+    "RowClass":null,
+    "Columns":[
+        {"Index":0,"Name":"ColumnIndex","Value":"Total","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":"Total"},
+        {"Index":1,"Name":"ColumnDate","Value":"/Date(952362000000)/","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":"Mar 07, 2000"},
+        {"Index":2,"Name":"ColumnText","Value":"d9b32a62-fe03-4b7c-9571-c7044f82ecb0","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"left","CellClass":"","DisplayText":"d9b32a62-fe03-4b7c-9571-c7044f82ecb0"},
+        {"Index":3,"Name":"ColumnInteger","Value":521333,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"521,333"},
+        {"Index":4,"Name":"ColumnDecimal","Value":27178.7635116399,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"27,178.76"},
+        {"Index":5,"Name":"ColumnPercentage","Value":0.0521332114246363,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"521.33%"}
+    ]
+}]
+            </textarea>
+        </div>
+    </li>
+</ul>

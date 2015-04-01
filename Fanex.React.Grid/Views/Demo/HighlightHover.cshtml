@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css
+{
+    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
+}
+@section jsx
+{
+    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-highlight-hover.js")"></script>
+}
+<ul>
+    <li>
+        <h2>Demo</h2>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-row" value="220" />
+            @*<input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />*@
+            <input type="button" value="Render" onclick="getGridOptionsFromClient();" />
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h2>Source</h2>
+        <div>            
+            - set property:<br />
+            <textarea rows="2" cols="120" readonly="readonly">
+IsHighlightHover: true,
+            </textarea>
+        </div>
+    </li>
+</ul>

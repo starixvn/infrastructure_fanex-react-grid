@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fanex React Grid</title>
+    @*<link href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />*@
+    <link href="@Url.Content("~/Content/_layout.css")" type="text/css" rel="stylesheet" />
+    @RenderSection("css", false)    
+    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/dependency/react.js")"></script>    
+    <script type="text/javascript" src="@Url.Content("~/dependency/JSXTransformer.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Demo/demo.js")"></script>
+    <script type="text/javascript">
+        var getClientUrl = function (url) {
+            var root = $("#HeliosRoot").val();
+            return root + url;
+        }
+    </script>
+    @RenderSection("jsx", false)
+    @RenderSection("js", false)
+</head>
+<body>
+    <div id="left-panel" class="container left-panel">
+        @{Html.RenderPartial("~/Views/Shared/_LeftMenu.cshtml");}
+    </div>
+    <div id="right-panel" class="container right-panel">
+        @RenderBody()
+    </div>
+    <div>
+        @Html.Hidden("HeliosRoot", Url.Content("~/"))
+    </div>
+</body>
+</html>

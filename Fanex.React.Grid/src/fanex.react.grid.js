@@ -1,0 +1,472 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="React.Grid.js" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Revision:
+//          + 03/11/2015: Structure component: Title, Header, Body, Footer.
+//          + 03/12/2015: Group header & jquery UI style.
+//          + 03/13/2015: Grid paging component.
+//          + 03/23/2015: unuse JQuery.
+//          + 03/24/2015: Grid client paging.
+//          + 03/25/2015: Grid server paging.
+//          + 03/26/2015: Default grid options.
+// </copyright>
+// --------------------------------------------------------------------------
+
+"use strict";
+
+var ReactGrid = React.createClass({
+    getInitialState: function (){
+        return {
+            options : {},
+            pagingCallbackFunction: this.props.pagingCallBackFunction 
+        };
+    },
+    componentWillMount: function() {
+        if(this.props.dataUrl !== undefined && this.props.dataUrl !== null && this.props.dataUrl !== ""){            
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", this.props.dataUrl, false);
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var result = JSON.parse(xhr.responseText);
+                        this.setState({ options: result, pagingCallbackFunction: this.props.pagingCallBackFunction });
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            }.bind(this);
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
+        } else {
+            var callBackFunction = this.props.gridOptions.PagingOptions.PagingCallBack === null ? undefined : this.props.gridOptions.PagingOptions.PagingCallBack;
+            var gridOptions;
+            if(this.props.gridOptions === undefined || this.props.gridOptions === null || this.props.gridOptions === {}){
+                gridOptions = getDefaultGridOptions();
+            } else {
+                gridOptions = this.props.gridOptions;
+            }
+
+            if(gridOptions.GridWidth === 0){
+                var scrollWidth = 20;
+                gridOptions.GridWidth += scrollWidth;
+                for(var i=0;i<gridOptions.ColumnWidthList.length;i++){
+                    gridOptions.GridWidth += gridOptions.ColumnWidthList[i];
+                }
+            }
+
+            this.setState({ options: gridOptions, pagingCallbackFunction: callBackFunction });
+        }
+    },
+    handlePagingChange: function(pageIndex, pageSize) {
+        var gridOptions = this.state.options;
+        var containerId = this.props.containerId;
+        gridOptions.PagingOptions.PageIndex = pageIndex;
+        gridOptions.PagingOptions.PageSize = pageSize;
+        if(gridOptions.IsServerPaging && typeof(this.state.pagingCallbackFunction) === 'function'){
+            var newOptions = this.state.pagingCallbackFunction(pageIndex, pageSize);
+            
+            this.setState({ options: newOptions });
+        }
+        else {
+            this.setState({ options: gridOptions });
+        }
+    },
+    render: function() {
+        var gridOptions = this.state.options;
+        if(gridOptions.PagingOptions.TotalItems === null || gridOptions.PagingOptions.TotalItems === undefined || gridOptions.PagingOptions.TotalItems === 0){
+            gridOptions.PagingOptions.TotalItems = gridOptions.BodyRows.length;
+        }
+        if(gridOptions.PagingOptions.NumberOfPage === null || gridOptions.PagingOptions.NumberOfPage === undefined || gridOptions.PagingOptions.NumberOfPage === 0){
+            var numOfPage = gridOptions.PagingOptions.TotalItems / gridOptions.PagingOptions.PageSize;
+            if(gridOptions.PagingOptions.TotalItems % gridOptions.PagingOptions.PageSize !== 0)
+            {
+                numOfPage = Math.round(numOfPage) + 1;
+            }
+            gridOptions.PagingOptions.NumberOfPage = numOfPage;
+        }
+        var containerId = this.props.containerId;
+        var titleWidth = Math.min(gridOptions.MaxContentWidth, gridOptions.GridWidth);
+        var titleNode;
+        if(gridOptions.ShowTitle){
+            titleNode = <div id={containerId + '-react-title'}><ReactTitle title={gridOptions.TitleText} width={titleWidth} /></div>;
+        }
+
+        var footerTopBorderNode;
+        if(gridOptions.ShowFooter && gridOptions.BodyRows.length > 0){
+            footerTopBorderNode = <div className="footer-border-top" style={{"width" : gridOptions.GridWidth + 2, "height":3, "border":"none"}}></div>;
+        }
+        var pagingNode;
+        if(gridOptions.IsPaging && gridOptions.BodyRows.length > 0){
+            pagingNode=<div id={containerId+"-react-paging"}><ReactPaging gridOptions={gridOptions} containerId={containerId} onPagingChange={this.handlePagingChange}/></div>;
+        }
+
+        return (
+            <div>
+                {titleNode}
+                <div id={containerId + '-react-content'} style = {{maxWidth : gridOptions.MaxContentWidth, overflowX: "auto"}}>
+                    <div id={containerId + '-react-header'} className="react-header" style={{"width": gridOptions.GridWidth}}>
+                        <ReactHeader gridOptions={gridOptions} />
+                    </div>
+                    <div id={containerId+'-react-data'} className="react-data" style={{overflowY:gridOptions.BodyRows.length <= 1 ? "hidden" :"scroll", maxHeight:gridOptions.MaxContentHeight, 'width': gridOptions.GridWidth}} >
+                        <ReactData gridOptions={gridOptions} />
+                    </div>
+                    {footerTopBorderNode}
+                    <div id={containerId+"-react-footer"} className="react-footer" style={{"width": (gridOptions.GridWidth + 2)}}>
+                        <ReactFooter gridOptions={gridOptions} />
+                    </div>
+                    {pagingNode}
+                </div>
+            </div>
+        );
+    }
+});
+var ReactTitle = React.createClass({
+    render: function() {
+        return (
+          <div className="react-title" style={{"width" : this.props.width}}>
+             <div className="react-title-text">
+                {this.props.title}
+             </div>
+             <div className="right-icons">
+                <div className="ui-icon ui-icon-calculator"></div>
+             </div>
+          </div>
+        );
+    }
+});
+var ReactHeader = React.createClass({
+    render: function() {
+        var columnWidths = this.props.gridOptions.ColumnWidthList;
+        var thClassName = "header-line-" + this.props.gridOptions.HeaderStyle;
+        var groupHeaderNodes;
+        if(this.props.gridOptions.GroupHeaders !== null && this.props.gridOptions.GroupHeaders !== []){
+            var groupHeaderNodes = this.props.gridOptions.GroupHeaders.map(function (item, i) {
+                thClassName += " " + item.TDClass;
+                return (
+                    <th colSpan={item.MergeColumnNumber} rowSpan={item.MergeRowNumber} className={thClassName} style={{"width" : item.Width> 0 ? item.Width : columnWidths[item.Index]}} key={i}>{item.Text}</th>
+                );
+            });
+        }
+        var headerNodes = this.props.gridOptions.HeaderColumns.map(function (item, i) {
+            thClassName += " " + item.TDClass;
+            return (
+                <th className={thClassName} style={{"width" : item.Width > 0 ? item.Width : columnWidths[item.Index]}} key={i}>{item.Text}</th>
+            );
+        });
+        return (
+            <div className="div-react-header">
+                <table className="react-header" cellPadding="0" cellSpacing="0">
+                    <thead>
+                        <tr className="header-row">
+                            {groupHeaderNodes}
+                        </tr>
+                        <tr className="header-row header-row-bottom">
+                            {headerNodes}
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        );
+    }
+});
+var ReactData = React.createClass({
+    render: function() {
+        if(this.props.gridOptions.BodyRows.length === 0) {
+            return (
+                <table className="" cellPadding="0" cellSpacing="0" width="100%">
+                    <tr className="content-row">
+                        <td className="center" colSpan={this.props.gridOptions.HeaderColumns.length}>{this.props.gridOptions.NoDataText}</td>
+                    </tr>
+                </table>
+            );
+        };
+
+        var bodyData = [];
+        var pagingOptions = this.props.gridOptions.PagingOptions;        
+        if(this.props.gridOptions.IsPaging && !this.props.gridOptions.IsServerPaging){
+            var fromIndex = pagingOptions.PageIndex * pagingOptions.PageSize;
+            var toIndex = Math.min(((parseInt(pagingOptions.PageIndex) + 1) * pagingOptions.PageSize), pagingOptions.TotalItems);
+            for(var index = fromIndex; index < toIndex; index++) {
+                bodyData.push(this.props.gridOptions.BodyRows[index]);
+            }
+        }
+        else {
+            bodyData = this.props.gridOptions.BodyRows;
+        }
+
+        for(var index = 0; index < bodyData[0].Columns.length; index++){
+            if(bodyData[0].Columns[index].Width === undefined || bodyData[0].Columns[index].Width === null || bodyData[0].Columns[index].Width === 0){
+                bodyData[0].Columns[index].Width = this.props.gridOptions.ColumnWidthList[index];
+            }
+        }
+
+        var isHighLightHover = this.props.gridOptions.IsHighlightHover;
+        var isOddEven = this.props.gridOptions.OddEvenRow;
+        var dataNodes = bodyData.map(function (row, i) {
+            var rowClassName = 'content-row';
+            if(isOddEven && (row.RowIndex % 2 == 1)){
+                rowClassName += " odd-row";
+            }
+
+            return (
+                <ReactDataRow isHighlightHover={isHighLightHover} dataRows={row} key={i} classNameOddEven={rowClassName} />
+            );
+        });
+
+        return (
+            <div className="div-react-data" style={{paddingRight : bodyData.length === 1 ? 17 : 0}}>
+                <table className="" cellPadding="0" cellSpacing="0">
+                    <tbody>
+                        {dataNodes}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+});
+var ReactDataRow = React.createClass({
+    getInitialState: function() {
+        return {hovered: false};
+    },
+    onMouseEnterHandler: function () {
+        this.setState({
+            hovered: true
+        })
+    },
+    onMouseLeaveHandler: function () {
+        this.setState({
+            hovered: false
+        })
+    },
+    render: function() {
+        var dataNodes = this.props.dataRows.Columns.map(function (cell, i) {
+            var cellClassName = cell.TextAlignment;
+            if(cell.IsHightLight){
+                cellClassName += " row-highlight";
+            }
+
+            return (
+                <td style={{"width" : cell.Width}} key={i} className={cellClassName}><div className={cell.CellClass}>{cell.DisplayText}</div></td>
+            );
+        });
+        var hoverClass =  this.state.hovered && this.props.isHighlightHover ? " row-highlight" : "";
+        return (
+            <tr className={this.props.classNameOddEven + hoverClass} onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
+                {dataNodes}
+            </tr>
+        );
+    }
+});
+var ReactFooter = React.createClass({
+    render: function() {
+        if(this.props.gridOptions.BodyRows.length === 0 || !this.props.gridOptions.ShowFooter) {
+            return (
+                <div></div>
+            );
+        };
+        var columnWidthList = this.props.gridOptions.ColumnWidthList;
+        var dataNodes = this.props.gridOptions.FooterRows.map(function (row, i) {
+            return (
+                <ReactFooterRow columnWidthList={columnWidthList} dataRows={row} key={i}/>
+            );
+        });
+        return (
+            <div className="div-react-footer">
+                <table className="react-footer" cellPadding="0" cellSpacing="0">
+                    <tbody>
+                        {dataNodes}
+                    </tbody>                    
+                </table>
+            </div>
+        );
+    }
+});
+var ReactFooterRow = React.createClass({
+    render: function() {
+        var columnWidthList = this.props.columnWidthList;
+        var footerRowCells = this.props.dataRows.Columns;
+        for(var i=0;i<footerRowCells.length;i++){
+            var cell = footerRowCells[i];
+            if(cell.MergeColumnNumber > 1){
+                var width=0;
+                for(var j = i; j< i+cell.MergeColumnNumber;j++){
+                    width+=columnWidthList[j];
+                }
+                
+                footerRowCells[i].Width = width;
+            } else {
+                footerRowCells[i].Width = columnWidthList[cell.Index];
+            }
+        };
+        var dataNodes = footerRowCells.map(function (cell, i) {
+            var cellClassName = cell.TextAlignment;
+            if(cell.IsHightLight){
+                cellClassName += " ui-state-highlight";
+            }
+
+            return (
+                <td style={{"width" : cell.Width}} key={i} className={cellClassName}><div>{cell.DisplayText}</div></td>
+            );
+        });
+        return (
+            <tr className="footer-row">
+                {dataNodes}
+            </tr>
+        );
+    }
+});
+var ReactPaging = React.createClass({
+    handleFirstClick: function(){
+        var gridOptions = this.props.gridOptions;
+        var containerId = this.props.containerId;
+        var pageSize = document.getElementById(containerId+"-page-size").value;
+        var pageIndex = gridOptions.PagingOptions.PageIndex;
+        if(pageIndex !== 0) {
+            this.props.onPagingChange(0, pageSize);
+        }
+    },
+    handlePrevClick: function(){
+        var gridOptions = this.props.gridOptions;
+        var containerId = this.props.containerId;
+        var pageSize = document.getElementById(containerId+"-page-size").value;
+        var pageIndex = gridOptions.PagingOptions.PageIndex;
+        if(pageIndex > 0) {
+            this.props.onPagingChange(--pageIndex, pageSize);  
+        }
+    },
+    handleNextClick: function(){
+        var gridOptions = this.props.gridOptions;
+        var containerId = this.props.containerId;
+        var pageSize = document.getElementById(containerId+"-page-size").value;
+        var pageIndex = gridOptions.PagingOptions.PageIndex;
+        if(pageIndex < gridOptions.PagingOptions.NumberOfPage - 1) {            
+            this.props.onPagingChange(++pageIndex, pageSize);  
+        }
+    },
+    handleLastClick: function(){
+        var gridOptions = this.props.gridOptions;
+        var containerId = this.props.containerId;
+        var pageSize = document.getElementById(containerId+"-page-size").value;
+        var pageIndex = gridOptions.PagingOptions.PageIndex;
+        if(pageIndex !== gridOptions.PagingOptions.NumberOfPage - 1) {
+            pageIndex = gridOptions.PagingOptions.NumberOfPage - 1;
+            this.props.onPagingChange(pageIndex, pageSize); 
+        }
+    },
+    handlePageIndexClick: function(pageIndex){
+        var gridOptions = this.props.gridOptions;
+        var containerId = this.props.containerId;
+        var pageSize = document.getElementById(containerId+"-page-size").value;
+        if(pageIndex !== gridOptions.PagingOptions.PageIndex) {
+            this.props.onPagingChange(pageIndex, pageSize);            
+        }
+    },
+    handlePageSizeChange: function(){
+        var gridOptions = this.props.gridOptions;
+        var containerId = this.props.containerId;
+        var pageSize = document.getElementById(containerId+"-page-size").value;
+        var pageIndex = 0;
+        gridOptions.PagingOptions.PageIndex = pageIndex;
+        gridOptions.PagingOptions.PageSize = pageSize;
+        var numOfPage = gridOptions.PagingOptions.TotalItems / gridOptions.PagingOptions.PageSize;
+        if(gridOptions.PagingOptions.TotalItems % gridOptions.PagingOptions.PageSize !== 0)
+        {
+            numOfPage = Math.round(numOfPage) + 1;
+        }
+        gridOptions.PagingOptions.NumberOfPage = numOfPage;
+        this.props.onPagingChange(pageIndex, pageSize);
+    },
+
+    render: function() {
+        var containerId = this.props.containerId;
+        var gridOptions = this.props.gridOptions;
+        var pagingOptions = this.props.gridOptions.PagingOptions;
+        var optionNodes = pagingOptions.PageSizeList.map(function (item, i) {
+            return(
+                <option value={item} key={i}>{item}</option>
+            );
+        });
+
+        var numOfPage = pagingOptions.TotalItems / pagingOptions.PageSize;
+        if(pagingOptions.TotalItems % pagingOptions.PageSize !== 0)
+        {
+            numOfPage = Math.round(numOfPage) + 1;
+        }
+
+        var pageList = [];
+        var pageIndex = pagingOptions.PageIndex;
+        var isShowEtc = false;
+        for(var i=0;i<numOfPage;i++){
+            if(i<2 || i>numOfPage-3 || i===pageIndex-1 || i===pageIndex || i===pageIndex+1){
+                pageList.push(i);
+                isShowEtc = true;
+            } else {
+                if(isShowEtc) {
+                    pageList.push(" .. ");
+                    isShowEtc = false;
+                }
+            }
+        }
+        var pageNodes = pageList.map(function (item, i) {
+            var pageClassName = "page-index";
+            if(item == pagingOptions.PageIndex){
+                pageClassName += " active-page";
+            }
+            return <span className={pageClassName} onClick={isNaN(item) ? "" : this.handlePageIndexClick.bind(this, item)} key={i}>{isNaN(item) ? item : item+1}</span>
+        }, this);
+        var fromItem = pagingOptions.PageIndex * pagingOptions.PageSize + 1;
+        var toItem = Math.min((pagingOptions.PageIndex + 1) * pagingOptions.PageSize, pagingOptions.TotalItems);
+        var pagingInfo = "Displaying " + fromItem + " .. " + toItem + " of " + pagingOptions.TotalItems;
+        var pagingWidth = Math.min(gridOptions.MaxContentWidth, gridOptions.GridWidth);
+        return (
+            <div className="react-paging" style={{"width" : pagingWidth}}>
+                <div className="paging-icon button-icon"><div className="ui-icon ui-icon-seek-first" onClick={this.handleFirstClick}></div></div>
+                <div className="paging-icon button-icon"><div className="ui-icon ui-icon-seek-prev" onClick={this.handlePrevClick}></div></div>
+                <div className="paging-control">
+                    <select defaultValue={pagingOptions.PageSize} onChange={this.handlePageSizeChange} id={containerId+"-page-size"} className="page-size">
+                        {optionNodes}
+                    </select>
+                </div>
+                <div className="paging-icon button-icon"><div className="ui-icon ui-icon-seek-next" onClick={this.handleNextClick}></div></div>
+                <div className="paging-icon button-icon"><div className="ui-icon ui-icon-seek-end" onClick={this.handleLastClick}></div></div>
+                <div className="paging-icon">
+                    {pageNodes}
+                </div>
+                <div className="paging-icon paging-info">
+                    {pagingInfo}
+                </div>
+            </div>
+        );
+    }
+});
+var getDefaultGridOptions = function(){
+    return {
+        ShowTitle: false,
+        TitleText: '',
+        NoDataText: "No data.",
+        ShowFooter: false,
+        OddEvenRow: false,
+        IsHighlightHover: false,
+        IsPaging: false,
+        IsServerPaging: false,
+        PagingOptions: {
+            PageIndex: 0,
+            PageSize: 100,
+            PageSizeList: [50, 100, 200, 500],
+            PagingCallBack: null,
+            NumberOfPage: 0,
+            TotalItems: 0
+        },
+        MaxContentHeight: 500,
+        MaxContentWidth: 1000,
+        GridWidth: 0,
+        ColumnWidthList: [],
+        HeaderStyle: 1,
+        GroupHeaders: [],
+        HeaderColumns: [],
+        BodyRows: [],
+        FooterRows: []
+    };
+};
