@@ -1,0 +1,21 @@
+﻿/* File Created: March 26, 2015 */
+.container {
+	float: left;
+	min-height: 900px;
+	border: 1px solid #cccccc;
+}
+.left-panel {
+	width: 150px;
+	padding-top: 5px;
+}
+.right-panel {
+	width: 1070px;
+	margin-left: 10px;
+	max-height: 900px;
+	overflow-y:auto;
+	padding-left: 5px;
+	padding-top: 5px;
+}
+ul li {
+	color: #222222;
+}

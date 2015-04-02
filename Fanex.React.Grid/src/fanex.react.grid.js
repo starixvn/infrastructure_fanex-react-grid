@@ -18,7 +18,8 @@ var ReactGrid = React.createClass({
     getInitialState: function (){
         return {
             options : {},
-            pagingCallbackFunction: this.props.pagingCallBackFunction 
+            pagingCallbackFunction: this.props.pagingCallBackFunction,            
+            largeDataPageIndex: 100
         };
     },
     componentWillMount: function() {
@@ -29,7 +30,7 @@ var ReactGrid = React.createClass({
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         var result = JSON.parse(xhr.responseText);
-                        this.setState({ options: result, pagingCallbackFunction: this.props.pagingCallBackFunction });
+                        this.setState({ options: result, pagingCallbackFunction: this.props.pagingCallBackFunction});
                     } else {
                         console.error(xhr.statusText);
                     }
@@ -73,6 +74,27 @@ var ReactGrid = React.createClass({
             this.setState({ options: gridOptions });
         }
     },
+    handleScroll: function(){
+        var gridOptions = this.state.options;
+        var scrollElementId = this.props.containerId + '-react-data';
+        var scrollTop = document.getElementById(scrollElementId).scrollTop;        
+        var scrolledToBottom = scrollTop >= document.getElementById(scrollElementId).scrollHeight-gridOptions.MaxContentHeight;
+        console.log(scrollTop);
+        console.log(document.getElementById(scrollElementId).scrollHeight);
+        if(scrolledToBottom && this.state.options.IsRenderLargeData){
+            var currentLargeDataPageIndex = this.state.largeDataPageIndex;
+            if(typeof(this.state.options.RenderLargeDataCallBack) === 'function') {
+                var newItems = this.state.options.RenderLargeDataCallBack(currentLargeDataPageIndex, currentLargeDataPageIndex+5);
+                var options = this.state.options;
+                for(var i=0;i<newItems.length;i++){
+                    options.BodyRows.push(newItems[i]);
+                }
+                this.setState({ options: options, largeDataPageIndex: currentLargeDataPageIndex+5 });
+            } else {            
+                this.setState({ largeDataPageIndex: currentLargeDataPageIndex+5 });
+            }
+        }        
+    },
     render: function() {
         var gridOptions = this.state.options;
         if(gridOptions.PagingOptions.TotalItems === null || gridOptions.PagingOptions.TotalItems === undefined || gridOptions.PagingOptions.TotalItems === 0){
@@ -95,7 +117,7 @@ var ReactGrid = React.createClass({
 
         var footerTopBorderNode;
         if(gridOptions.ShowFooter && gridOptions.BodyRows.length > 0){
-            footerTopBorderNode = <div className="footer-border-top" style={{"width" : gridOptions.GridWidth + 2, "height":3, "border":"none"}}></div>;
+            footerTopBorderNode = <div className="footer-border-top" style={{"width" : gridOptions.GridWidth + 2, "height":2, "border":"none"}}></div>;
         }
         var pagingNode;
         if(gridOptions.IsPaging && gridOptions.BodyRows.length > 0){
@@ -109,8 +131,8 @@ var ReactGrid = React.createClass({
                     <div id={containerId + '-react-header'} className="react-header" style={{"width": gridOptions.GridWidth}}>
                         <ReactHeader gridOptions={gridOptions} />
                     </div>
-                    <div id={containerId+'-react-data'} className="react-data" style={{overflowY:gridOptions.BodyRows.length <= 1 ? "hidden" :"scroll", maxHeight:gridOptions.MaxContentHeight, 'width': gridOptions.GridWidth}} >
-                        <ReactData gridOptions={gridOptions} />
+                    <div id={containerId+'-react-data'} className="react-data" onScroll={this.handleScroll} style={{overflowY:gridOptions.BodyRows.length <= 1 ? "hidden" :"scroll", maxHeight:gridOptions.MaxContentHeight, 'width': gridOptions.GridWidth}} >
+                        <ReactData gridOptions={gridOptions} isLargeData={this.state.isLargeData} largeDataPageIndex={this.state.largeDataPageIndex}/>
                     </div>
                     {footerTopBorderNode}
                     <div id={containerId+"-react-footer"} className="react-footer" style={{"width": (gridOptions.GridWidth + 2)}}>
@@ -181,7 +203,7 @@ var ReactData = React.createClass({
                     </tr>
                 </table>
             );
-        };
+        };       
 
         var bodyData = [];
         var pagingOptions = this.props.gridOptions.PagingOptions;        
@@ -193,26 +215,54 @@ var ReactData = React.createClass({
             }
         }
         else {
-            bodyData = this.props.gridOptions.BodyRows;
-        }
-
-        for(var index = 0; index < bodyData[0].Columns.length; index++){
-            if(bodyData[0].Columns[index].Width === undefined || bodyData[0].Columns[index].Width === null || bodyData[0].Columns[index].Width === 0){
-                bodyData[0].Columns[index].Width = this.props.gridOptions.ColumnWidthList[index];
+            if(this.props.gridOptions.IsRenderLargeData){
+                var maxIndex = Math.min(this.props.largeDataPageIndex, this.props.gridOptions.BodyRows.length);
+                for(var index=0;index<maxIndex;index++){
+                    bodyData.push(this.props.gridOptions.BodyRows[index]);
+                }
+            } else {
+                bodyData = this.props.gridOptions.BodyRows;
             }
         }
 
+        var columnWidthList = this.props.gridOptions.ColumnWidthList;
         var isHighLightHover = this.props.gridOptions.IsHighlightHover;
         var isOddEven = this.props.gridOptions.OddEvenRow;
         var dataNodes = bodyData.map(function (row, i) {
+            for(var index=0;index<row.Columns.length;index++){
+                var cell=row.Columns[index];                
+                if(cell.MergeColumnNumber>1){
+                    var width=columnWidthList[cell.Index];
+                    for(var colIndex = cell.Index+1;colIndex<cell.Index+cell.MergeColumnNumber;colIndex++){
+                        width+=columnWidthList[colIndex];                            
+                        row.Columns[colIndex].Invisible = true;
+                        for(var rowIndex=row.RowIndex+1;rowIndex<row.RowIndex+cell.MergeRowNumber;rowIndex++){
+                            bodyData[rowIndex].Columns[colIndex].Invisible = true;
+                        }
+                    }
+                    cell.Width = width;                    
+                }
+                if(cell.MergeRowNumber>1){
+                    for(var rowIndex=row.RowIndex+1;rowIndex<row.RowIndex+cell.MergeRowNumber;rowIndex++){
+                        bodyData[rowIndex].Columns[index].Invisible = true;
+                    }
+                } 
+                if(i==0){
+                    var rowIndex=0;
+                    if((bodyData[i].Columns[index].MergeColumnNumber > 1 || bodyData[i].Columns[index].Invisible) && bodyData[i].Columns[index].MergeRowNumber < bodyData.length){
+                        rowIndex=bodyData[i].Columns[index].MergeRowNumber;
+                        console.log(rowIndex);
+                    }
+                    if(bodyData[rowIndex].Columns[index].Width === undefined || bodyData[rowIndex].Columns[index].Width === null || bodyData[rowIndex].Columns[index].Width === 0){
+                        bodyData[rowIndex].Columns[index].Width = columnWidthList[index];
+                    }
+                }               
+            }
             var rowClassName = 'content-row';
             if(isOddEven && (row.RowIndex % 2 == 1)){
                 rowClassName += " odd-row";
             }
-
-            return (
-                <ReactDataRow isHighlightHover={isHighLightHover} dataRows={row} key={i} classNameOddEven={rowClassName} />
-            );
+            return <ReactDataRow isHighlightHover={isHighLightHover} dataRows={row} key={i} classNameOddEven={rowClassName} />;
         });
 
         return (
@@ -246,10 +296,9 @@ var ReactDataRow = React.createClass({
             if(cell.IsHightLight){
                 cellClassName += " row-highlight";
             }
-
-            return (
-                <td style={{"width" : cell.Width}} key={i} className={cellClassName}><div className={cell.CellClass}>{cell.DisplayText}</div></td>
-            );
+            if(!cell.Invisible){
+                return <td colSpan={cell.MergeColumnNumber} rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div className={cell.CellClass}>{cell.DisplayText}</div></td>;
+            }
         });
         var hoverClass =  this.state.hovered && this.props.isHighlightHover ? " row-highlight" : "";
         return (
@@ -267,7 +316,16 @@ var ReactFooter = React.createClass({
             );
         };
         var columnWidthList = this.props.gridOptions.ColumnWidthList;
-        var dataNodes = this.props.gridOptions.FooterRows.map(function (row, i) {
+        var footerRows = this.props.gridOptions.FooterRows;
+        var dataNodes = footerRows.map(function (row, i) {
+            for(var index=0;index<row.Columns.length;index++){
+                var cell=row.Columns[index];
+                if(cell.MergeRowNumber>1){
+                    for(var rowIndex=row.RowIndex+1;rowIndex<row.RowIndex+cell.MergeRowNumber;rowIndex++){
+                        footerRows[rowIndex].Columns[index].Invisible = true;
+                    }
+                }
+            }
             return (
                 <ReactFooterRow columnWidthList={columnWidthList} dataRows={row} key={i}/>
             );
@@ -291,7 +349,7 @@ var ReactFooterRow = React.createClass({
             var cell = footerRowCells[i];
             if(cell.MergeColumnNumber > 1){
                 var width=0;
-                for(var j = i; j< i+cell.MergeColumnNumber;j++){
+                for(var j = cell.Index; j< cell.Index+cell.MergeColumnNumber;j++){
                     width+=columnWidthList[j];
                 }
                 
@@ -305,10 +363,9 @@ var ReactFooterRow = React.createClass({
             if(cell.IsHightLight){
                 cellClassName += " ui-state-highlight";
             }
-
-            return (
-                <td style={{"width" : cell.Width}} key={i} className={cellClassName}><div>{cell.DisplayText}</div></td>
-            );
+            if(!cell.Invisible){
+                return <td rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div>{cell.DisplayText}</div></td>;
+            }
         });
         return (
             <tr className="footer-row">
@@ -342,7 +399,7 @@ var ReactPaging = React.createClass({
         var pageSize = document.getElementById(containerId+"-page-size").value;
         var pageIndex = gridOptions.PagingOptions.PageIndex;
         if(pageIndex < gridOptions.PagingOptions.NumberOfPage - 1) {            
-            this.props.onPagingChange(++pageIndex, pageSize);  
+            this.props.onPagingChange(++pageIndex, pageSize);
         }
     },
     handleLastClick: function(){

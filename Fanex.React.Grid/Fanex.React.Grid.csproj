@@ -159,6 +159,8 @@
     <Content Include="dest\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
     <Content Include="dest\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
     <Content Include="dest\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Scripts\Demo\demo-large-data.js" />
+    <Content Include="Scripts\Demo\demo-merge-column.js" />
     <Content Include="Scripts\Demo\demo.js" />
     <Content Include="Scripts\Demo\demo-server-paging.js" />
     <Content Include="Scripts\Demo\demo-client-paging.js" />
@@ -215,7 +217,7 @@
     <Content Include="Views\Demo\FirstGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReactJs.Options\Fanex.React.Options.csproj">
+    <ProjectReference Include="..\Fanex.React.Options\Fanex.React.Options.csproj">
       <Project>{D445CEE6-233A-46D3-9529-F89FA361321E}</Project>
       <Name>Fanex.React.Options</Name>
     </ProjectReference>
@@ -252,6 +254,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Demo\ServerPaging.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Demo\MergeColumn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Demo\LargeData.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

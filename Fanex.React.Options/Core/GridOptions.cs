@@ -46,6 +46,10 @@ namespace Fanex.React.Options.Core
 
         public int MaxContentWidth { get; set; }
 
+        public bool IsRenderLargeData { get; set; }
+
+        public string RenderLargeDataCallBack { get; set; }
+
         public int GridWidth
         {
             get

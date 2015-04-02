@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css
+{
+    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
+}
+@section jsx
+{
+    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
+    @*<script type="text/jsx" src="@Url.Content("~/dest/fanex.react.grid.min.js")"></script>*@
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-large-data.js")"></script>
+}
+<ul>
+    <li>
+        <h2>Demo</h2>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-rows" value="1000000" />
+            <input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />
+            @*<input type="button" value="Get full data" onclick="getFullData();" />*@
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h2>Source</h2>
+        <div>            
+            - set the properties:<br />
+            <textarea rows="2" cols="120" readonly="readonly">
+IsRenderLargeData: true,
+RenderLargeDataCallBack: a function
+            </textarea> <br />
+            - If render at client: not set RenderLargeDataCallBack <br />
+            - If render at server: set RenderLargeDataCallBack is a function that call the continuous data of the grid.   
+        </div>
+    </li>
+</ul>

@@ -43,6 +43,8 @@ namespace Fanex.React.Options.Core
 
         public bool IsHightLight { get; set; }
 
+        public bool Invisible { get; set; }
+
         public string TextAlignment
         {
             get
