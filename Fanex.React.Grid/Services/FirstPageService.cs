@@ -91,6 +91,8 @@
         /// GET REACT GRID OPTIONS.
         /// </summary>
         /// <param name="numOfRow">NUMBER OF ROWS.</param>
+        /// <param name="startIndex">PAGE INDEX.</param>
+        /// <param name="endIndex">PAGE SIZE.</param>
         /// <returns>GRID OPTIONS.</returns>
         public GridOptions GetLargeGridOptions(int numOfRow, int startIndex = 0, int endIndex = 100)
         {
@@ -113,12 +115,14 @@
         /// GET BODY ROWS.
         /// </summary>
         /// <param name="numOfRow">NUMBER OF ROWS.</param>
+        /// <param name="startIndex">PAGE INDEX.</param>
+        /// <param name="endIndex">PAGE SIZE.</param>
         /// <returns>LIST OF ROW.</returns>
         private List<Row> GetLageDataBodyRows(int numOfRow, int startIndex = 0, int endIndex = 100)
         {
             var rows = new List<Row>();
             var maxIndex = Math.Min(endIndex, numOfRow);
-            for (int i = startIndex; i < endIndex; i++)
+            for (int i = startIndex; i < maxIndex; i++)
             {
                 var colindex = 0;
                 var columns = new List<Column>();
@@ -211,15 +215,20 @@
             for (int i = 0; i < numOfRow; i++)
             {
                 var mergeRowNumber = i % 10 == 0 && i < numOfRow - 4 ? 3 : 1;
-                var mergeColumnNumber = i % 10 == 0 && i < numOfRow - 4 ? 2 : 1;
-                var colindex = 0;
                 var columns = new List<Column>();
-                columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Center, CellDataType = CellDataType.Integer, Value = i + 1 });
-                columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Value = RandomDate(), MergeRowNumber = mergeRowNumber });
-                columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Left, CellDataType = CellDataType.Text, Value = i.ToString() + RandomText() });
-                columns.Add(new Column() { Index = colindex++, CellDataType = CellDataType.Integer, Value = RandomInt(), MergeRowNumber = mergeRowNumber });
-                columns.Add(new Column() { Index = colindex++, CellDataType = CellDataType.Decimal, Value = (i % 2 == 0 ? 1 : -1) * RandomDecimal() });
-                columns.Add(new Column() { Index = colindex++, CellDataType = CellDataType.Percentage, Value = RandomMargin() });
+                columns.Add(new Column() { Index = 0, TextAlign = TextAlign.Center, CellDataType = CellDataType.Integer, Value = i + 1 });
+                columns.Add(new Column()
+                {
+                    Index = 1,
+                    TextAlign = TextAlign.Center,
+                    CellDataType = CellDataType.DateTimeMMMdyyyy,
+                    Value = RandomDate(),
+                    MergeRowNumber = mergeRowNumber
+                });
+                columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Left, CellDataType = CellDataType.Text, Value = i.ToString() + RandomText() });
+                columns.Add(new Column() { Index = 3, CellDataType = CellDataType.Integer, Value = RandomInt(), MergeRowNumber = mergeRowNumber });
+                columns.Add(new Column() { Index = 4, CellDataType = CellDataType.Decimal, Value = (i % 2 == 0 ? 1 : -1) * RandomDecimal() });
+                columns.Add(new Column() { Index = 5, CellDataType = CellDataType.Percentage, Value = RandomMargin() });
                 rows.Add(new Row() { Columns = columns, RowIndex = i });
             }
 
@@ -237,10 +246,25 @@
             {
                 var mergeRowNumber = i == 0 ? 3 : 1;
                 var columns = new List<Column>();
-                columns.Add(new Column() { Index = 0, TextAlign = TextAlign.Center, CellDataType = CellDataType.Text, Value = "Total", MergeColumnNumber = 2, MergeRowNumber = mergeRowNumber });
+                columns.Add(new Column()
+                {
+                    Index = 0,
+                    TextAlign = TextAlign.Center,
+                    CellDataType = CellDataType.Text,
+                    Value = "Total",
+                    MergeColumnNumber = 2,
+                    MergeRowNumber = mergeRowNumber
+                });
                 columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Left, CellDataType = CellDataType.Text, Value = RandomText() });
                 columns.Add(new Column() { Index = 3, TextAlign = TextAlign.Right, CellDataType = CellDataType.Integer, Value = RandomInt() });
-                columns.Add(new Column() { Index = 4, TextAlign = TextAlign.Right, CellDataType = CellDataType.Decimal, Value = RandomDecimal(), MergeRowNumber = mergeRowNumber });
+                columns.Add(new Column()
+                {
+                    Index = 4,
+                    TextAlign = TextAlign.Right,
+                    CellDataType = CellDataType.Decimal,
+                    Value = RandomDecimal(),
+                    MergeRowNumber = mergeRowNumber
+                });
                 columns.Add(new Column() { Index = 5, TextAlign = TextAlign.Right, CellDataType = CellDataType.Percentage, Value = RandomMargin(), });
                 rows.Add(new Row() { Columns = columns, RowIndex = i });
             }
@@ -250,7 +274,7 @@
 
         private string RandomText()
         {
-            return Guid.NewGuid().ToString();
+            return Guid.NewGuid().ToString().Replace("-", string.Empty);
         }
 
         private int RandomInt()

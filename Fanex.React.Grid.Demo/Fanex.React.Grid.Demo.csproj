@@ -51,6 +51,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="bootstrap\css\bootstrap.css" />
+    <Content Include="bootstrap\css\bootstrap.min.css" />
+    <Content Include="bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="bootstrap\js\bootstrap.js" />
+    <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="css\images\bg_boxTop.jpg" />
     <Content Include="css\images\bg_buttonsite.jpg" />
     <Content Include="css\images\grid-layout.PNG" />
@@ -82,6 +90,7 @@
     <Content Include="dest\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
     <Content Include="dest\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
     <Content Include="dest\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="dest\images\ui-icons_e0fdff_256x240.png" />
     <Content Include="index.htm" />
     <Content Include="scripts\Demo\demo-client-paging.js" />
     <Content Include="scripts\Demo\demo-first-page.js" />

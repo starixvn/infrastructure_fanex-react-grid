@@ -1,15 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "LargeData";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section css
-{
-    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
-}
-@section jsx
-{
-    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
-    @*<script type="text/jsx" src="@Url.Content("~/dest/fanex.react.grid.min.js")"></script>*@
 }
 @section js
 {
@@ -17,7 +9,7 @@
 }
 <ul>
     <li>
-        <h2>Demo</h2>
+        <h3>Demo - 1 Million Rows</h3>
         <div>
             Num of row:
             <input type="text" id="num-of-rows" value="1000000" />
@@ -32,7 +24,7 @@
         </div>
     </li>
     <li>
-        <h2>Source</h2>
+        <h3>Source</h3>
         <div>            
             - set the properties:<br />
             <textarea rows="2" cols="120" readonly="readonly">

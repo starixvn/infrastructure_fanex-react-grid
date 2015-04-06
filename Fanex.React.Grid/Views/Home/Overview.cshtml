@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Overview";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActiveLink = "Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
-<h2>
-    React Grid Component</h2>
+
 <p>
     You have reports within large data rows. You want to render the data grid faster
     than normal way. Fanex.React.Grid Component is a solution.
@@ -59,6 +59,12 @@
         <b>MaxContentWidth:</b> Integer value. Max width of the grid, when the grid's width is larger, the scroll bar will show. Default is 1000.
     </li>
     <li>
+        <b>IsRenderLargeData:</b> Boolean value. If true, data will be rendered a part, and after scroll to bottom of grid data (***) will be rendered more. Default is false.
+    </li>
+    <li>
+        <b>RenderLargeDataCallBack:</b> Function type. The function at client which call data (***) if you want to get it from server. Make sure it return the continuous data of the grid. Default is undefined.
+    </li>
+    <li>
         <b>GridWidth:</b> Integer value. Width of the grid. It's calculated by total of all column's width. Default is 0.
     </li>
     <li>
@@ -68,15 +74,88 @@
         <b>HeaderStyle:</b> Integer value. Number of header line. Default is 1.
     </li>
     <li>
-        <b>GroupHeaders:</b> Object array. Array of group header column cell. Each object contain a column. Default is [].        
+        <b>GroupHeaders:</b> Object array. Array of group header column cell. Each object contain a column. Default is [].
+        <ul>
+            <li><b>Index:</b> Integer value. Index of group header cell. This property must be set exactly.</li>
+
+            <li><b>Name:</b> String value. Name of group header cell.</li>
+
+            <li><b>Width:</b> </li>
+
+            <li><b>MergeColumnNumber:</b> Integer value. Number of merge columns. Default is 1.</li>
+
+            <li><b>MergeRowNumber:</b> Integer value. Number of merge rows. Default is 1.</li>
+
+            <li><b>Text:</b> String value. Group header text. Default is empty.</li>
+            
+            <li><b>TDClass:</b> String value. Custom css of header cell. Default is empty.</li>
+        </ul>
     </li>
     <li>
         <b>HeaderColumns:</b> Object array. Array of header column cell. Default is [].
+        <ul>
+            <li><b>Index:</b> Integer value. Index of group header cell. This property must be set exactly.</li>
+
+            <li><b>Name:</b> String value. Name of group header cell.</li>
+
+            <li><b>Width:</b> </li>
+
+            <li><b>MergeColumnNumber:</b> Integer value. Number of merge columns. Default is 1.</li>
+
+            <li><b>MergeRowNumber:</b> Integer value. Number of merge rows. Default is 1.</li>
+
+            <li><b>Text:</b> String value. Group header text. Default is empty.</li>
+            
+            <li><b>TDClass:</b> String value. Custom css of header cell. Default is empty.</li>
+        </ul>
     </li>
     <li>
-        <b>BodyRows:</b> Object array. Array of body column cell. Default is [].
+        <b>BodyRows:</b> Object array. Array of body column cells. Default is [].
+        <ul>
+            <li><b>RowIndex:</b> Integer number. Row index value.</li>
+            <li><b>RowClass:</b> String value. Custom css of body cell. Default is empty.</li>
+            <li><b>Columns:</b> Object array. Array of body cells. Default is [].
+                <ul>
+                    <li><b>Index:</b> Integer value. Index of group header cell. This property must be set exactly.</li>
+                    <li><b>Name:</b> String value. Name of body cell.</li>
+                    <li><b>TDClass:</b> String value. Custom css of body cell. Default is empty.</li>
+                    <li><b>CellDataType:</b> Object value. The type of displaying value of the cell. Default is CellDataType.Text.
+                        Options:
+                        <ul>
+                            <li><b>Text:</b> Example: The text</li>
+                            <li><b>Integer:</b> Example: 1,234</li>
+                            <li><b>IntegerRedPositive:</b> Example: <span style="color:Red">1,234</span></li>
+                            <li><b>IntegerRedNegative:</b> Example: <span style="color:Red">-1,234</span></li>
+                            <li><b>Decimal:</b> Example: 1,234.56</li>
+                            <li><b>DecimalRedPositive:</b> Example: <span style="color:Red">1,234.56</span></li>
+                            <li><b>DecimalRedNegative:</b> Example: <span style="color:Red">-1,234.56</span></li>
+                            <li><b>DecimalRedAbsNegative:</b> Example: Value is -1,234.56, Display Text is <span style="color:Red">1,234.56</span></li>
+                            <li><b>DecimalRedParenthesesNegative:</b> Example: Value is -1,234.56, Display Text is <span style="color:Red">(1,234.56)</span></li>
+                            <li><b>Percentage:</b> Example: Value is 0.12, Display Text is 12%</li>
+                            <li><b>PercentageRedPositive:</b> Example: Value is 0.12, Display Text is <span style="color:Red">12%</span></li>
+                            <li><b>PercentageRedNegative:</b> Example: Value is -0.12, Display Text is <span style="color:Red">-12%</span></li>
+                            <li><b>PercentageRedAbsNegative:</b> Example: Value is -0.12, Display Text is <span style="color:Red">12%</span></li>
+                            <li><b>PercentageRedParenthesesNegative:</b> Example: Value is -0.12, Display Text is <span style="color:Red">(12%)</span></li>
+                            <li><b>DateTime:</b> Example: 1/31/2015</li>
+                            <li><b>DateTimeMMddyyyy:</b> Example: 01/01/2015</li>
+                            <li><b>DateTimeMMMdyyyy:</b> Example: Jan 1, 2015</li>
+                            <li><b>DateTimedMyyyy:</b> Example: 31/12/2015</li>
+                            <li><b>DateTimeMmmmddyyyy:</b> Example: January 01, 2015</li>
+                        </ul>
+                    </li>
+                    <li><b>Value:</b> Object value. Value of the cell. Default is null.</li>
+                    <li><b>MergeColumnNumber:</b> Integer value. Number of merge columns. Default is 1.</li>
+                    <li><b>MergeRowNumber:</b> Integer value. Number of merge rows. Default is 1.</li>
+                    <li><b>IsHightLight:</b> Boolean value. If true, the row will be show in high light background. Default is false.</li>                    
+                    <li><b>CellClass:</b> String value. Custom css of the cell. Default is empty.</li>
+                    <li><b>TextAlignment:</b> String value. Alignment of cell text. Value: "left", "right" and "center". Default is "right".</li>
+                    <li><b>DisplayText:</b> String value. If it's set, the grid will show this instead of calculate the Value. Default is empty.</li>
+                </ul>
+            </li>
+        </ul>
+        
     </li>
     <li>
-        <b>FooterRows:</b> Object array. Array of footer column cell. Default is [].
+        <b>FooterRows:</b> Object array. Array of footer column cell. <b>The properties are the same with BodyRows.</b> Default is [].
     </li>
 </ul>

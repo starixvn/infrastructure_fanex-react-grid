@@ -76,7 +76,7 @@ function getGridOptionsFromClient() {
         HeaderStyle: 1,
         GroupHeaders: [],
         HeaderColumns: [
-            {"Index":0,"Name":"ColumnIndex","Width":60,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"#","TextAlign":2,"TdClass":null},
+            {"Index":0,"Name":"ColumnIndex","Text":"#","TextAlign":2,"TdClass":null},
             {"Index":1,"Name":"ColumnDate","Width":100,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Date","TextAlign":2,"TdClass":null},
             {"Index":2,"Name":"ColumnText","Width":250,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Text","TextAlign":2,"TdClass":null},
             {"Index":3,"Name":"ColumnInteger","Width":100,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Integer","TextAlign":2,"TdClass":null},
@@ -104,12 +104,12 @@ function generateData(numOfRows){
         var mergeRowNumber = i % 10 == 0 && i < numOfRows - 4 ? 3 : 1;
         var mergeColumnNumber = i % 10 == 0 ? 3 : 1;
         var columns = [
-            {"Index":0,"Name":"ColumnIndex","Value":1,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":i+1},
-            {"Index":1,"Name":"ColumnDate","Value":"/Date(950547600000)/","MergeColumnNumber":1,"MergeRowNumber":mergeRowNumber,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":"Feb 15, 2000"},
-            {"Index":2,"Name":"ColumnText","Value":"041bb9832-1494-4bee-8529-70c29bc3026f","MergeColumnNumber":mergeColumnNumber,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"left","CellClass":"","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
-            {"Index":3,"Name":"ColumnInteger","Value":330243,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330,243"},
-            {"Index":4,"Name":"ColumnDecimal","Value":10906.0248046955,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"10,906.02"},
-            {"Index":5,"Name":"ColumnPercentage","Value":0.0330242421631814,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330.24%"}
+            {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center"},
+            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center"},
+            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left"},
+            {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right"},
+            {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right"},
+            {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right"}
         ];
         var row = {
             RowIndex: i,
@@ -126,11 +126,11 @@ function generateFooter(){
     for(var i = 0; i< 2;i++){
         var mergeRows = i==0?2:1;
         var columns = [
-            {"Index":0,"Name":"ColumnIndex","Value":1,"MergeColumnNumber":2,"MergeRowNumber":mergeRows,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":"Total"},
-            {"Index":2,"Name":"ColumnText","Value":"041bb9832-1494-4bee-8529-70c29bc3026f","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"left","CellClass":"","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
-            {"Index":3,"Name":"ColumnInteger","Value":330243,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330,243"},
-            {"Index":4,"Name":"ColumnDecimal","Value":10906.0248046955,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"10,906.02"},
-            {"Index":5,"Name":"ColumnPercentage","Value":0.0330242421631814,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330.24%"}
+            {"Index":0,"Value":1,"MergeColumnNumber":2,"MergeRowNumber":mergeRows,"TextAlignment":"center","DisplayText":"Total"},
+            {"Index":2,"Value":"","TextAlignment":"left","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
+            {"Index":3,"Value":330243,"TextAlignment":"right","DisplayText":"330,243"},
+            {"Index":4,"Value":10906.0248046955,"TextAlignment":"right","DisplayText":"10,906.02"},
+            {"Index":5,"Value":0.0330242421631814,"TextAlignment":"right","DisplayText":"330.24%"}
         ];
         var row = {
             RowIndex: i,

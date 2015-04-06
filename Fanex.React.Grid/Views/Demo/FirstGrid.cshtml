@@ -1,15 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "FirstGrid";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section css
-{
-    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
-}
-@section jsx
-{
-    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
-    @*<script type="text/jsx" src="@Url.Content("~/dest/fanex.react.grid.min.js")"></script>*@
 }
 @section js
 {
@@ -17,7 +9,7 @@
 }
 <ul>
     <li>
-        <h2>Demo</h2>
+        <h3>Demo</h3>
         <div>
             Num of row:
             <input type="text" id="num-of-row" value="220" />
@@ -32,7 +24,7 @@
         </div>
     </li>
     <li>
-        <h2>Source</h2>
+        <h3>Source</h3>
         <ul>
             <li><h3>Server render:</h3>
                 <div>
@@ -67,15 +59,12 @@ public GridOptions GetReactGridOptions(int numOfRow)
 private List<HeaderColumns> GetHeader()
 {
     var headers = new List<HeaderColumns>();
-    var colindex = 0;
-
-    headers.Add(new HeaderColumns { Index = colindex++, Name = "ColumnIndex", TextAlign = TextAlign.Center, Text = "#", Width = 60 });
-    headers.Add(new HeaderColumns { Index = colindex++, Name = "ColumnDate", TextAlign = TextAlign.Center, Text = "Date", Width = 100 });
-    headers.Add(new HeaderColumns { Index = colindex++, Name = "ColumnText", TextAlign = TextAlign.Center, Text = "Text", Width = 250 });
-    headers.Add(new HeaderColumns { Index = colindex++, Name = "ColumnInteger", TextAlign = TextAlign.Center, Text = "Integer", Width = 100 });
-    headers.Add(new HeaderColumns { Index = colindex++, Name = "ColumnDecimal", TextAlign = TextAlign.Center, Text = "Decimal", Width = 150 });
-    headers.Add(new HeaderColumns { Index = colindex++, Name = "ColumnPercentage", TextAlign = TextAlign.Center, Text = "Percentage", Width = 150 });
-
+    headers.Add(new HeaderColumns { Index = 0, Name = "ColumnIndex", TextAlign = TextAlign.Center, Text = "#"});
+    headers.Add(new HeaderColumns { Index = 1, Name = "ColumnDate", TextAlign = TextAlign.Center, Text = "Date"});
+    headers.Add(new HeaderColumns { Index = 2, Name = "ColumnText", TextAlign = TextAlign.Center, Text = "Text"});
+    headers.Add(new HeaderColumns { Index = 3, Name = "ColumnInteger", TextAlign = TextAlign.Center, Text = "Integer"});
+    headers.Add(new HeaderColumns { Index = 4, Name = "ColumnDecimal", TextAlign = TextAlign.Center, Text = "Decimal"});
+    headers.Add(new HeaderColumns { Index = 5, Name = "ColumnPercentage", TextAlign = TextAlign.Center, Text = "Percentage"});
     return headers;
 }
 
@@ -84,14 +73,13 @@ private List<Row> GetBodyRows(int numOfRow)
     var rows = new List<Row>();
     for (int i = 0; i < numOfRow; i++)
     {
-        var colindex = 0;
         var columns = new List<Column>();
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Center, CellDataType = CellDataType.Integer, Name = "ColumnIndex", Value = i + 1 });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Name = "ColumnDate", Value = RandomDate() });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Left, CellDataType = CellDataType.Text, Name = "ColumnText", Value = i.ToString() + RandomText() });
-        columns.Add(new Column() { Index = colindex++, CellDataType = CellDataType.Integer, Name = "ColumnInteger", Value = RandomInt() });
-        columns.Add(new Column() { Index = colindex++, CellDataType = CellDataType.Decimal, Name = "ColumnDecimal", Value = (i % 2 == 0 ? 1 : -1) * RandomDecimal() });
-        columns.Add(new Column() { Index = colindex++, CellDataType = CellDataType.Percentage, Name = "ColumnPercentage", Value = RandomMargin() });
+        columns.Add(new Column() { Index = 0, TextAlign = TextAlign.Center, CellDataType = CellDataType.Integer, Name = "ColumnIndex", Value = i + 1 });
+        columns.Add(new Column() { Index = 1, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Name = "ColumnDate", Value = RandomDate() });
+        columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Left, CellDataType = CellDataType.Text, Name = "ColumnText", Value = i.ToString() + RandomText() });
+        columns.Add(new Column() { Index = 3, CellDataType = CellDataType.Integer, Name = "ColumnInteger", Value = RandomInt() });
+        columns.Add(new Column() { Index = 4, CellDataType = CellDataType.Decimal, Name = "ColumnDecimal", Value = (i % 2 == 0 ? 1 : -1) * RandomDecimal() });
+        columns.Add(new Column() { Index = 5, CellDataType = CellDataType.Percentage, Name = "ColumnPercentage", Value = RandomMargin() });
         rows.Add(new Row() { Columns = columns, RowIndex = i });
     }
 
@@ -103,14 +91,13 @@ private List<Row> GetFooterRows()
     var rows = new List<Row>();
     for (int i = 0; i < 2; i++)
     {
-        var colindex = 0;
         var columns = new List<Column>();
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Center, CellDataType = CellDataType.Text, Name = "ColumnIndex", Value = "Total" });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Name = "ColumnDate", Value = RandomDate() });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Right, CellDataType = CellDataType.Integer, Name = "ColumnText", Value = RandomInt(), Width = 100 });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Right, CellDataType = CellDataType.Decimal, Name = "ColumnInteger", Value = RandomDecimal(), Width = 150 });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Right, CellDataType = CellDataType.Decimal, Name = "ColumnDecimal", Value = RandomDecimal(), Width = 150 });
-        columns.Add(new Column() { Index = colindex++, TextAlign = TextAlign.Right, CellDataType = CellDataType.Percentage, Name = "ColumnPercentage", Value = RandomMargin(), Width = 100 });
+        columns.Add(new Column() { Index = 0, TextAlign = TextAlign.Center, CellDataType = CellDataType.Text, Value = "Total" });
+        columns.Add(new Column() { Index = 1, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Value = RandomDate() });
+        columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Right, CellDataType = CellDataType.Integer, Value = RandomInt() });
+        columns.Add(new Column() { Index = 3, TextAlign = TextAlign.Right, CellDataType = CellDataType.Decimal, Value = RandomDecimal() });
+        columns.Add(new Column() { Index = 4, TextAlign = TextAlign.Right, CellDataType = CellDataType.Decimal, Value = RandomDecimal() });
+        columns.Add(new Column() { Index = 5, TextAlign = TextAlign.Right, CellDataType = CellDataType.Percentage, Value = RandomMargin() });
         rows.Add(new Row() { Columns = columns, RowIndex = i });
     }
 
@@ -127,7 +114,7 @@ xhr.onload = function () {
     var gridOptions = JSON.parse(xhr.responseText);
     React.render(
         <ReactGrid gridOptions={gridOptions} containerId='react-grid' />,
-        document.getElementById('react-grid-server')
+        document.getElementById('react-grid')
     );
 };
 xhr.send(criteria);
@@ -148,6 +135,8 @@ var gridOptions = {
     ShowFooter: false,
     OddEvenRow: false,
     IsHighlightHover: false,
+    IsRenderLargeData: false,
+    RenderLargeDataCallBack: null,
     IsPaging: false,
     IsServerPaging: false,
     PagingOptions: {
@@ -165,12 +154,12 @@ var gridOptions = {
     HeaderStyle: 1,
     GroupHeaders: [],
     HeaderColumns: [
-        {"Index":0,"Name":"ColumnIndex","Width":60,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"#","TextAlign":2,"TdClass":null},
-        {"Index":1,"Name":"ColumnDate","Width":100,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Date","TextAlign":2,"TdClass":null},
-        {"Index":2,"Name":"ColumnText","Width":250,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Text","TextAlign":2,"TdClass":null},
-        {"Index":3,"Name":"ColumnInteger","Width":100,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Integer","TextAlign":2,"TdClass":null},
-        {"Index":4,"Name":"ColumnDecimal","Width":150,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Decimal","TextAlign":2,"TdClass":null},
-        {"Index":5,"Name":"ColumnPercentage","Width":150,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Percentage","TextAlign":2,"TdClass":null}
+        {"Index":0,"Name":"ColumnIndex","Text":"#","TdClass":null},
+        {"Index":1,"Name":"ColumnDate","Text":"Date","TdClass":null},
+        {"Index":2,"Name":"ColumnText","Text":"Text","TdClass":null},
+        {"Index":3,"Name":"ColumnInteger","Text":"Integer","TdClass":null},
+        {"Index":4,"Name":"ColumnDecimal","Text":"Decimal","TdClass":null},
+        {"Index":5,"Name":"ColumnPercentage","Text":"Percentage","TdClass":null}
     ],
     BodyRows: generateData(document.getElementById("num-of-row").value),
     FooterRows: []
@@ -180,12 +169,12 @@ function generateData(numOfRows){
     var bodyRows = [];
     for(var i = 0; i< numOfRows;i++){
         var columns = [
-            {"Index":0,"Name":"ColumnIndex","Value":1,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":i},
-            {"Index":1,"Name":"ColumnDate","Value":"/Date(950547600000)/","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":"Feb 15, 2000"},
-            {"Index":2,"Name":"ColumnText","Value":"041bb9832-1494-4bee-8529-70c29bc3026f","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"left","CellClass":"","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
-            {"Index":3,"Name":"ColumnInteger","Value":330243,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330,243"},
-            {"Index":4,"Name":"ColumnDecimal","Value":10906.0248046955,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"10,906.02"},
-            {"Index":5,"Name":"ColumnPercentage","Value":0.0330242421631814,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330.24%"}
+            {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center","CellClass":""},
+            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center","CellClass":""},
+            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left","CellClass":""},
+            {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right","CellClass":""},
+            {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right","CellClass":""},
+            {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right","CellClass":""}
         ];
         var row = {
             RowIndex: i,
@@ -201,7 +190,7 @@ function generateData(numOfRows){
                 <textarea rows="3" cols="100" readonly="readonly">
 React.render(
     <ReactGrid gridOptions={gridOptions} containerId='react-grid' />,
-    document.getElementById('react-grid-client')
+    document.getElementById('react-grid')
 );
                     </textarea>
                 </div>

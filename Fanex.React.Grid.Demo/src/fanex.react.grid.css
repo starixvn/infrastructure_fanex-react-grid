@@ -100,7 +100,7 @@ div.react-data table tr.content-row td
 {
     height:auto;
     min-height:22px;
-    padding:4px 0px;    
+    padding:2px 0px;    
     vertical-align: middle;
     border-right: 1px solid inherit;
     border-bottom: 1px solid inherit;
@@ -173,6 +173,12 @@ table.react-footer .footer-row td div {
     margin: 3px;
     float: left;
 	
+}
+.react-paging .paging-control select
+{
+    width: 50px !important;
+    height: 22px !important;
+    padding: 0 !important;
 }
 .react-paging .paging-info
 {

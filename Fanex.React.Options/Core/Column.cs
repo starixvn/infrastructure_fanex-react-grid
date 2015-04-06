@@ -36,7 +36,7 @@ namespace Fanex.React.Options.Core
         public CellDataType CellDataType { get; set; }
 
         public object Value { get; set; }
-
+                
         public int MergeColumnNumber { get; set; }
 
         public int MergeRowNumber { get; set; }
@@ -44,6 +44,8 @@ namespace Fanex.React.Options.Core
         public bool IsHightLight { get; set; }
 
         public bool Invisible { get; set; }
+
+        public string CellClass { get; set; }
 
         public string TextAlignment
         {
@@ -62,31 +64,7 @@ namespace Fanex.React.Options.Core
                 }
             }
         }
-
-        public string CellClass
-        {
-            get
-            {
-                switch (CellDataType)
-                {
-                    case CellDataType.IntegerRedPositive:
-                    case CellDataType.DecimalRedPositive:
-                    case CellDataType.PercentageRedPositive:
-                        return (decimal)Value > 0 ? "red" : string.Empty;
-                    case CellDataType.IntegerRedNegative:
-                    case CellDataType.DecimalRedNegative:
-                    case CellDataType.DecimalRedAbsNegative:
-                    case CellDataType.DecimalRedParenthesesNegative:
-                    case CellDataType.PercentageRedNegative:
-                    case CellDataType.PercentageRedAbsNegative:
-                    case CellDataType.PercentageRedParenthesesNegative:
-                        return (decimal)Value < 0 ? "red" : string.Empty;
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-
+        
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Justification = "Reviewed.")]
         public string DisplayText
         {
@@ -112,12 +90,13 @@ namespace Fanex.React.Options.Core
                         return Value == null ? string.Empty : Math.Abs((decimal)Value).ToString("(0,0.00)");
 
                     case CellDataType.DateTime:
+                        return Value == null ? string.Empty : ((DateTime)Value).ToString("M/d/yyyy");
                     case CellDataType.DateTimeMMddyyyy:
                         return Value == null ? string.Empty : ((DateTime)Value).ToString("MM/dd/yyyy");
-                    case CellDataType.DateTimeMdyyyy:
-                        return Value == null ? string.Empty : ((DateTime)Value).ToString("M/d/yyyy");
+                    case CellDataType.DateTimedMyyyy:
+                        return Value == null ? string.Empty : ((DateTime)Value).ToString("d/M/yyyy");
                     case CellDataType.DateTimeMMMdyyyy:
-                        return Value == null ? string.Empty : ((DateTime)Value).ToString("MMM dd, yyyy");
+                        return Value == null ? string.Empty : ((DateTime)Value).ToString("MMM d, yyyy");
                     case CellDataType.DateTimeMmmmddyyyy:
                         return Value == null ? string.Empty : ((DateTime)Value).ToString("MMMM dd, yyyy");
 

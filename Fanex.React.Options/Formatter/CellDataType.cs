@@ -103,7 +103,7 @@ namespace Fanex.React.Options.Formatter
         /// <summary>
         /// Cell Data Type: Date Time. Ex: 1/1/2015.
         /// </summary>
-        DateTimeMdyyyy = 42,
+        DateTimedMyyyy = 42,
 
         /// <summary>
         /// Cell Data Type: Date Time. Ex: January 01, 2015.

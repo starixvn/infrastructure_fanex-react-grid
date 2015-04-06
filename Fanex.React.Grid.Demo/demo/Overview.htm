@@ -3,9 +3,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Fanex React Grid</title>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="../css/_layout.css" type="text/css" rel="stylesheet" />
     <link href="../src/fanex.react.grid.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../dependency/react.js"></script>
     <script type="text/javascript" src="../dependency/JSXTransformer.js"></script>
     <script type="text/javascript" src="../scripts/Demo/demo.js"></script>
@@ -13,8 +15,9 @@
     <script type="text/jsx" src=""></script>
 </head>
 <body>
-    <div id="left-panel" class="container left-panel">
-        <ul>
+    <h2> Fanex.React.Grid</h2>
+    <div id="left-panel" class="container left-panel">        
+        <ul id="myTab" class="nav nav-stacked nav-pills col-md-2">
             <li><a href="Overview.htm">Overview</a> </li>
             <li><a href="GettingStarted.htm">Getting started</a> </li>
             <li><a href="FirstGrid.htm">Your first grid</a> </li>
@@ -31,9 +34,7 @@
         </ul>
     </div>
     <div class="container right-panel" id="right-panel">
-        <!--Render body-->
-        <h2>
-            React Grid Component</h2>
+        
         <p>
             You have reports within large data rows. You want to render the data grid faster
             than normal way. Fanex.React.Grid Component is a solution.
@@ -41,7 +42,7 @@
         <p>
             In this tutorial I'm going to show you how to use Fanex.React.Grid component implemented
             with Facebook's <a href="http://reactjs.net/">React</a> library. I use the JSX syntax
-            to write the react grid component. So let's <a href="/Home/GettingStarted">get started</a>.
+            to write the react grid component. So let's <a href="GettingStarted.htm">get started</a>.
         </p>
         <h3>
             Fanex.React.Grid's layout</h3>
@@ -49,52 +50,146 @@
         <h3>
             Parameters:</h3>
         <ul>
-            <li><b>ShowTitle:</b> Boolean value. If true, the data grid title will show. Default
-                is false. </li>
-            <li><b>TitleText:</b> String value. The text you want to show at grid title. Default
-                is empty. </li>
-            <li><b>NoDataText:</b> String value. The text you want to show in gird when it doesn't
-                have any records. Default is "No data.". </li>
-            <li><b>ShowFooter:</b> Boolean value. If true, the grid footer will show. Default is
-                false. </li>
-            <li><b>OddEvenRow:</b> Boolean value. If true, the data grid odd and even row will show
-                with different background color. Default is false. </li>
-            <li><b>IsHighlightHover:</b> Boolean value. If true, the content row will have high
-                light background when hovered. Default is false. </li>
-            <li><b>IsPaging:</b> Boolean value. If true, the paging control will show. Default is
-                false. </li>
-            <li><b>IsServerPaging:</b> Boolean value. It works when IsPaging = true. If true, your
-                grid data will paging in the Server. Default is false. </li>
-            <li><b>PagingOptions: </b>Object value. It works when IsPaging = true. Contain all paging
-                properties.
+            <li>
+                <b>ShowTitle:</b> Boolean value. If true, the data grid title will show. Default is false.        
+            </li>
+            <li>
+                <b>TitleText:</b> String value. The text you want to show at grid title. Default is empty.
+            </li>
+            <li>
+                <b>NoDataText:</b> String value. The text you want to show in gird when it doesn't have any records. Default is "No data.".
+            </li>
+            <li>
+                <b>ShowFooter:</b> Boolean value. If true, the grid footer will show. Default is false.
+            </li>
+            <li>
+                <b>OddEvenRow:</b> Boolean value. If true, the data grid odd and even row will show with different background color. Default is false. 
+            </li>
+            <li>
+                <b>IsHighlightHover:</b> Boolean value. If true, the content row will have high light background when hovered. Default is false.
+            </li>
+            <li>
+                <b>IsPaging:</b> Boolean value. If true, the paging control will show. Default is false.
+            </li>
+            <li>
+                <b>IsServerPaging:</b> Boolean value. It works when IsPaging = true. If true, your grid data will paging in the Server. Default is false.
+            </li>
+            <li>
+                <b>PagingOptions: </b> Object value. It works when IsPaging = true. Contain all paging properties.
                 <ul>
                     <li><b>PageIndex:</b> Integer value. Value of page index. Default is 0.</li>
-                    <li><b>PageSize:</b> Integer value. Value of page size (number of rows in 1 page). Default
-                        is 100.</li>
+                    <li><b>PageSize:</b> Integer value. Value of page size (number of rows in 1 page). Default is 100.</li>
                     <li><b>PageSizeList:</b> Array value. Array of PageSize. Default is [50, 100, 200, 500].</li>
-                    <li><b>PagingCallBack:</b> Function type. If IsServerPaging is true, you must define
-                        this function to call back data after paging. Default is undefined.</li>
+                    <li><b>PagingCallBack:</b> Function type. If IsServerPaging is true, you must define this function to call back data after paging. Default is undefined.</li>
                     <li><b>NumberOfPage:</b> Integer value. Value of number of pages. Default is 0.</li>
-                    <li><b>TotalItems:</b> Integer value. Value of total rows in grid (all pages). Default
-                        is 0.</li>
+                    <li><b>TotalItems:</b> Integer value. Value of total rows in grid (all pages). Default is 0.</li>
                 </ul>
             </li>
-            <li><b>MaxContentHeight:</b> Integer value. Max height of the grid, when the grid's
-                height is larger, the scroll bar will show. Default is 500. </li>
-            <li><b>MaxContentWidth:</b> Integer value. Max width of the grid, when the grid's width
-                is larger, the scroll bar will show. Default is 1000. </li>
-            <li><b>GridWidth:</b> Integer value. Width of the grid. It's calculated by total of
-                all column's width. Default is 0. </li>
-            <li><b>ColumnWidthList:</b> List integer. List of column's width. The base width that
-                all column in header, body and footer must follow. This is the most important property
-                of ReactGrid so that it must be not null. Default is []. </li>
-            <li><b>HeaderStyle:</b> Integer value. Number of header line. Default is 1. </li>
-            <li><b>GroupHeaders:</b> Object array. Array of group header column cell. Each object
-                contain a column. Default is []. </li>
-            <li><b>HeaderColumns:</b> Object array. Array of header column cell. Default is [].
+            <li>
+                <b>MaxContentHeight:</b> Integer value. Max height of the grid, when the grid's height is larger, the scroll bar will show. Default is 500.
             </li>
-            <li><b>BodyRows:</b> Object array. Array of body column cell. Default is []. </li>
-            <li><b>FooterRows:</b> Object array. Array of footer column cell. Default is [].
+            <li>
+                <b>MaxContentWidth:</b> Integer value. Max width of the grid, when the grid's width is larger, the scroll bar will show. Default is 1000.
+            </li>
+            <li>
+                <b>IsRenderLargeData:</b> Boolean value. If true, data will be rendered a part, and after scroll to bottom of grid data (***) will be rendered more. Default is false.
+            </li>
+            <li>
+                <b>RenderLargeDataCallBack:</b> Function type. The function at client which call data (***) if you want to get it from server. Make sure it return the continuous data of the grid. Default is undefined.
+            </li>
+            <li>
+                <b>GridWidth:</b> Integer value. Width of the grid. It's calculated by total of all column's width. Default is 0.
+            </li>
+            <li>
+                <b>ColumnWidthList:</b> List integer. List of column's width. The base width that all column in header, body and footer must follow. This is the most important property of ReactGrid so that it must be not null. Default is [].
+            </li>
+            <li>
+                <b>HeaderStyle:</b> Integer value. Number of header line. Default is 1.
+            </li>
+            <li>
+                <b>GroupHeaders:</b> Object array. Array of group header column cell. Each object contain a column. Default is [].
+                <ul>
+                    <li><b>Index:</b> Integer value. Index of group header cell. This property must be set exactly.</li>
+
+                    <li><b>Name:</b> String value. Name of group header cell.</li>
+
+                    <li><b>Width:</b> </li>
+
+                    <li><b>MergeColumnNumber:</b> Integer value. Number of merge columns. Default is 1.</li>
+
+                    <li><b>MergeRowNumber:</b> Integer value. Number of merge rows. Default is 1.</li>
+
+                    <li><b>Text:</b> String value. Group header text. Default is empty.</li>
+            
+                    <li><b>TDClass:</b> String value. Custom css of header cell. Default is empty.</li>
+                </ul>
+            </li>
+            <li>
+                <b>HeaderColumns:</b> Object array. Array of header column cell. Default is [].
+                <ul>
+                    <li><b>Index:</b> Integer value. Index of group header cell. This property must be set exactly.</li>
+
+                    <li><b>Name:</b> String value. Name of group header cell.</li>
+
+                    <li><b>Width:</b> </li>
+
+                    <li><b>MergeColumnNumber:</b> Integer value. Number of merge columns. Default is 1.</li>
+
+                    <li><b>MergeRowNumber:</b> Integer value. Number of merge rows. Default is 1.</li>
+
+                    <li><b>Text:</b> String value. Group header text. Default is empty.</li>
+            
+                    <li><b>TDClass:</b> String value. Custom css of header cell. Default is empty.</li>
+                </ul>
+            </li>
+            <li>
+                <b>BodyRows:</b> Object array. Array of body column cells. Default is [].
+                <ul>
+                    <li><b>RowIndex:</b> Integer number. Row index value.</li>
+                    <li><b>RowClass:</b> String value. Custom css of body cell. Default is empty.</li>
+                    <li><b>Columns:</b> Object array. Array of body cells. Default is [].
+                        <ul>
+                            <li><b>Index:</b> Integer value. Index of group header cell. This property must be set exactly.</li>
+                            <li><b>Name:</b> String value. Name of body cell.</li>
+                            <li><b>TDClass:</b> String value. Custom css of body cell. Default is empty.</li>
+                            <li><b>CellDataType:</b> Object value. The type of displaying value of the cell. Default is CellDataType.Text.
+                                Options:
+                                <ul>
+                                    <li><b>Text:</b> Example: The text</li>
+                                    <li><b>Integer:</b> Example: 1,234</li>
+                                    <li><b>IntegerRedPositive:</b> Example: <span style="color:Red">1,234</span></li>
+                                    <li><b>IntegerRedNegative:</b> Example: <span style="color:Red">-1,234</span></li>
+                                    <li><b>Decimal:</b> Example: 1,234.56</li>
+                                    <li><b>DecimalRedPositive:</b> Example: <span style="color:Red">1,234.56</span></li>
+                                    <li><b>DecimalRedNegative:</b> Example: <span style="color:Red">-1,234.56</span></li>
+                                    <li><b>DecimalRedAbsNegative:</b> Example: Value is -1,234.56, Display Text is <span style="color:Red">1,234.56</span></li>
+                                    <li><b>DecimalRedParenthesesNegative:</b> Example: Value is -1,234.56, Display Text is <span style="color:Red">(1,234.56)</span></li>
+                                    <li><b>Percentage:</b> Example: Value is 0.12, Display Text is 12%</li>
+                                    <li><b>PercentageRedPositive:</b> Example: Value is 0.12, Display Text is <span style="color:Red">12%</span></li>
+                                    <li><b>PercentageRedNegative:</b> Example: Value is -0.12, Display Text is <span style="color:Red">-12%</span></li>
+                                    <li><b>PercentageRedAbsNegative:</b> Example: Value is -0.12, Display Text is <span style="color:Red">12%</span></li>
+                                    <li><b>PercentageRedParenthesesNegative:</b> Example: Value is -0.12, Display Text is <span style="color:Red">(12%)</span></li>
+                                    <li><b>DateTime:</b> Example: 1/31/2015</li>
+                                    <li><b>DateTimeMMddyyyy:</b> Example: 01/01/2015</li>
+                                    <li><b>DateTimeMMMdyyyy:</b> Example: Jan 1, 2015</li>
+                                    <li><b>DateTimedMyyyy:</b> Example: 31/12/2015</li>
+                                    <li><b>DateTimeMmmmddyyyy:</b> Example: January 01, 2015</li>
+                                </ul>
+                            </li>
+                            <li><b>Value:</b> Object value. Value of the cell. Default is null.</li>
+                            <li><b>MergeColumnNumber:</b> Integer value. Number of merge columns. Default is 1.</li>
+                            <li><b>MergeRowNumber:</b> Integer value. Number of merge rows. Default is 1.</li>
+                            <li><b>IsHightLight:</b> Boolean value. If true, the row will be show in high light background. Default is false.</li>                    
+                            <li><b>CellClass:</b> String value. Custom css of the cell. Default is empty.</li>
+                            <li><b>TextAlignment:</b> String value. Alignment of cell text. Value: "left", "right" and "center". Default is "right".</li>
+                            <li><b>DisplayText:</b> String value. If it's set, the grid will show this instead of calculate the Value. Default is empty.</li>
+                        </ul>
+                    </li>
+                </ul>
+        
+            </li>
+            <li>
+                <b>FooterRows:</b> Object array. Array of footer column cell. <b>The properties are the same with BodyRows.</b> Default is [].
             </li>
         </ul>
     </div>

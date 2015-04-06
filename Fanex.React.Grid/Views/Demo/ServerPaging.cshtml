@@ -1,14 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "ServerPaging";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section css
-{
-    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
-}
-@section jsx
-{
-    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
 }
 @section js
 {
@@ -16,7 +9,7 @@
 }
 <ul>
     <li>
-        <h2>Demo</h2>
+        <h3>Demo - Server Paging</h3>
         <div>
             Num of row:
             <input type="text" id="num-of-row" value="220" />
@@ -31,10 +24,10 @@
         </div>
     </li>
     <li>
-        <h2>Source</h2>
+        <h3>Source</h3>
         <div>            
             - client code:<br />
-            <textarea rows="15" cols="120" readonly="readonly">
+            <textarea rows="20" cols="120" readonly="readonly">
 function getGridOptionsFromServer() {
    
     var criteria = new FormData();
@@ -75,7 +68,7 @@ function getDataPagingCallBack(pageIndex, pageSize) {
 }
             </textarea> <br />
             - server code:<br />
-            <textarea rows="15" cols="120" readonly="readonly">
+            <textarea rows="20" cols="120" readonly="readonly">
 public JsonResult ServerPagingData(int numOfRow, int pageIndex = 0, int pageSize = 100)
 {
     var reactService = new FirstPageService();

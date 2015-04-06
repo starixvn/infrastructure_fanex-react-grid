@@ -9,6 +9,8 @@
 //          + 03/24/2015: Grid client paging.
 //          + 03/25/2015: Grid server paging.
 //          + 03/26/2015: Default grid options.
+//          + 04/02/2015: Merge cell.
+//          + 04/03/2015: Format cell: number, datetime, percentage.
 // </copyright>
 // --------------------------------------------------------------------------
 
@@ -79,8 +81,6 @@ var ReactGrid = React.createClass({
         var scrollElementId = this.props.containerId + '-react-data';
         var scrollTop = document.getElementById(scrollElementId).scrollTop;        
         var scrolledToBottom = scrollTop >= document.getElementById(scrollElementId).scrollHeight-gridOptions.MaxContentHeight;
-        console.log(scrollTop);
-        console.log(document.getElementById(scrollElementId).scrollHeight);
         if(scrolledToBottom && this.state.options.IsRenderLargeData){
             var currentLargeDataPageIndex = this.state.largeDataPageIndex;
             if(typeof(this.state.options.RenderLargeDataCallBack) === 'function') {
@@ -240,7 +240,7 @@ var ReactData = React.createClass({
                             bodyData[rowIndex].Columns[colIndex].Invisible = true;
                         }
                     }
-                    cell.Width = width;                    
+                    cell.Width = width;
                 }
                 if(cell.MergeRowNumber>1){
                     for(var rowIndex=row.RowIndex+1;rowIndex<row.RowIndex+cell.MergeRowNumber;rowIndex++){
@@ -251,7 +251,6 @@ var ReactData = React.createClass({
                     var rowIndex=0;
                     if((bodyData[i].Columns[index].MergeColumnNumber > 1 || bodyData[i].Columns[index].Invisible) && bodyData[i].Columns[index].MergeRowNumber < bodyData.length){
                         rowIndex=bodyData[i].Columns[index].MergeRowNumber;
-                        console.log(rowIndex);
                     }
                     if(bodyData[rowIndex].Columns[index].Width === undefined || bodyData[rowIndex].Columns[index].Width === null || bodyData[rowIndex].Columns[index].Width === 0){
                         bodyData[rowIndex].Columns[index].Width = columnWidthList[index];
@@ -262,7 +261,7 @@ var ReactData = React.createClass({
             if(isOddEven && (row.RowIndex % 2 == 1)){
                 rowClassName += " odd-row";
             }
-            return <ReactDataRow isHighlightHover={isHighLightHover} dataRows={row} key={i} classNameOddEven={rowClassName} />;
+            return (<ReactDataRow isHighlightHover={isHighLightHover} dataRows={row} key={i} classNameOddEven={rowClassName} />);
         });
 
         return (
@@ -292,12 +291,19 @@ var ReactDataRow = React.createClass({
     },
     render: function() {
         var dataNodes = this.props.dataRows.Columns.map(function (cell, i) {
-            var cellClassName = cell.TextAlignment;
+            var cellClassName = cell.TextAlignment + " " + cell.TDClass;
             if(cell.IsHightLight){
                 cellClassName += " row-highlight";
             }
+            var displayText;
+            if(cell.DisplayText === undefined || cell.DisplayText === null || cell.DisplayText === ''){
+                displayText = formatCellData(cell.Value, cell.CellDataType);
+            }else{
+                displayText = cell.DisplayText;
+            }
+
             if(!cell.Invisible){
-                return <td colSpan={cell.MergeColumnNumber} rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div className={cell.CellClass}>{cell.DisplayText}</div></td>;
+                return (<td colSpan={cell.MergeColumnNumber} rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div className={cell.CellClass + " " +formatRedColor(cell)}>{displayText}</div></td>);
             }
         });
         var hoverClass =  this.state.hovered && this.props.isHighlightHover ? " row-highlight" : "";
@@ -363,8 +369,14 @@ var ReactFooterRow = React.createClass({
             if(cell.IsHightLight){
                 cellClassName += " ui-state-highlight";
             }
+            var displayText;
+            if(cell.DisplayText === undefined || cell.DisplayText === null || cell.DisplayText === ''){
+                displayText = formatCellData(cell.Value, cell.CellDataType);
+            }else{
+                displayText = cell.DisplayText;
+            }
             if(!cell.Invisible){
-                return <td rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div>{cell.DisplayText}</div></td>;
+                return (<td rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div>{displayText}</div></td>);
             }
         });
         return (
@@ -526,4 +538,115 @@ var getDefaultGridOptions = function(){
         BodyRows: [],
         FooterRows: []
     };
+};
+var CellDataType = {
+    Text : 0,
+    Integer : 1,
+    IntegerRedPositive : 10,
+    IntegerRedNegative : 11,
+    Decimal : 2,
+    DecimalRedPositive : 20,
+    DecimalRedNegative : 21,
+    DecimalRedAbsNegative : 22,
+    DecimalRedParenthesesNegative : 23,
+    Percentage : 3,
+    PercentageRedPositive : 30,
+    PercentageRedNegative : 31,
+    PercentageRedAbsNegative : 32,
+    PercentageRedParenthesesNegative : 33,
+    DateTime : 4,
+    DateTimeMMddyyyy : 40,
+    DateTimeMMMdyyyy : 41,
+    DateTimedMyyyy : 42,
+    DateTimeMmmmddyyyy : 43
+};
+var formatCellData = function(value, cellDataType)
+{
+    switch (cellDataType)
+    {
+        case CellDataType.Text:
+            return value;
+
+        case CellDataType.Integer:
+        case CellDataType.IntegerRedNegative:
+        case CellDataType.IntegerRedPositive:
+            return value == null ? string.Empty : numberWithCommas(value);
+
+        case CellDataType.Decimal:
+        case CellDataType.DecimalRedNegative:
+        case CellDataType.DecimalRedPositive:
+            return value == null ? string.Empty : numberWithCommas(value.toFixed(2));
+        case CellDataType.DecimalRedAbsNegative:
+            return value == null ? string.Empty : Math.abs(numberWithCommas(value.toFixed(2)));
+        case CellDataType.DecimalRedParenthesesNegative:
+            return value == null ? string.Empty : "("+Math.abs(numberWithCommas(value.toFixed(2)))+")";
+
+        case CellDataType.DateTime:
+        case CellDataType.DateTimeMMddyyyy:
+            return value == null ? string.Empty : formatMMddyyyy(value);
+        case CellDataType.DateTimedMyyyy:
+            return value == null ? string.Empty : value.getDate() + "/" + (value.getMonth() + 1) +"/" + value.getFullYear();
+        case CellDataType.DateTimeMMMdyyyy:
+            return value == null ? string.Empty : formatMMMdyyyy(value);
+        case CellDataType.DateTimeMmmmddyyyy:
+            return value == null ? string.Empty : formatMMMMddyyyy(value);
+
+        case CellDataType.Percentage:
+        case CellDataType.PercentageRedNegative:
+        case CellDataType.PercentageRedPositive:
+            return value == null ? string.Empty : numberWithCommas((100 * value).toFixed(2))+"%";
+        case CellDataType.PercentageRedAbsNegative:
+            return value == null ? string.Empty : numberWithCommas((100 * Math.abs(value)).toFixed(2))+"%";
+        case CellDataType.PercentageRedParenthesesNegative:
+            return value == null ? string.Empty : "("+numberWithCommas((100 * Math.abs(value)).toFixed(2))+"%)";
+        default:
+            return value;
+    }
+};
+var formatRedColor=function(cell){
+    switch (cell.CellDataType)
+    {
+        case CellDataType.IntegerRedPositive:
+        case CellDataType.DecimalRedPositive:
+        case CellDataType.PercentageRedPositive:
+            return cell.Value > 0 ? "red" : '';
+        case CellDataType.IntegerRedNegative:
+        case CellDataType.DecimalRedNegative:
+        case CellDataType.DecimalRedAbsNegative:
+        case CellDataType.DecimalRedParenthesesNegative:
+        case CellDataType.PercentageRedNegative:
+        case CellDataType.PercentageRedAbsNegative:
+        case CellDataType.PercentageRedParenthesesNegative:
+            return cell.Value < 0 ? "red" : '';
+        default:
+            return '';
+    }
+};
+var numberWithCommas = function (number) {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+};
+var monthFullNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var formatMMddyyyy = function(value) {
+   var date = new Date(value);
+   var yyyy = date.getFullYear().toString();
+   var mm = (date.getMonth()+1).toString();
+   var dd  = date.getDate().toString();
+   return (mm[1]?mm:"0"+mm[0]) + "/" + (dd[1]?dd:"0"+dd[0]) + "/" + yyyy;
+};
+var formatMMMdyyyy = function(value) {
+   var date = new Date(value);
+   var yyyy = date.getFullYear().toString();
+   var mm = date.getMonth();
+   var dd  = date.getDate().toString();
+   return (monthNames[mm] + " " + dd) + ", " + yyyy;
+};
+var formatMMMMddyyyy = function(value) {
+    var date = new Date(value);
+   var yyyy = date.getFullYear().toString();
+   var mm = date.getMonth();
+   var dd  = date.getDate().toString();
+   return (monthFullNames[mm] + " " + (dd[1]?dd:"0"+dd[0])) + ", " + yyyy;
 };

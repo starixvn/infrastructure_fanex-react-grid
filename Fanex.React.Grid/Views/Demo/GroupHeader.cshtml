@@ -1,14 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "GroupHeader";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section css
-{
-    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
-}
-@section jsx
-{
-    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
 }
 @section js
 {
@@ -16,7 +9,7 @@
 }
 <ul>
     <li>
-        <h2>Demo</h2>
+        <h3>Demo - Group Headers</h3>
         <div>
             Num of row:
             <input type="text" id="num-of-row" value="220" />
@@ -31,20 +24,21 @@
         </div>
     </li>
     <li>
-        <h2>Source</h2>
+        <h3>Source</h3>
         <div>            
             - set 2 properties:<br />
             <textarea rows="20" cols="120" readonly="readonly">
 GroupHeaders: [
-    {"Index":0,"Name":"ColumnIndex","Width":60,"MergeRowNumber":2,"Text":"#","TextAlign":2,"TdClass":null},
-    {"Index":1,"Name":"ColumnDate","Width":100,"MergeRowNumber":2,"Text":"Date","TextAlign":2,"TdClass":null},
-    {"Index":2,"Name":"ColumnText","Width":250,"MergeRowNumber":2,"Text":"Text","TextAlign":2,"TdClass":null},
-    {"Index":3,"Name":"ColumnInteger","Width":100,"MergeColumnNumber":2,"Text":"Number","TextAlign":2,"TdClass":null},            
-    {"Index":5,"Name":"ColumnPercentage","Width":150,"MergeRowNumber":2,"Text":"Percentage","TextAlign":2,"TdClass":null}
+    {"Index":0,"Name":"ColumnIndex","MergeRowNumber":2,"Text":"#","TextAlign":2},
+    {"Index":1,"Name":"ColumnDate","MergeRowNumber":2,"Text":"Date","TextAlign":2},
+    {"Index":2,"Name":"ColumnText","MergeRowNumber":2,"Text":"Text","TextAlign":2},
+    {"Index":3,"Name":"ColumnInteger","MergeColumnNumber":2,"Text":"Number","TextAlign":2},
+    {"Index":5,"Name":"ColumnPercentage","MergeRowNumber":2,"Text":"Percentage","TextAlign":2}
 ],
+
 HeaderColumns: [            
-    {"Index":3,"Name":"ColumnInteger","Width":100,"Text":"Integer","TextAlign":2,"TdClass":null},
-    {"Index":4,"Name":"ColumnDecimal","Width":150,"Text":"Decimal","TextAlign":2,"TdClass":null},            
+    {"Index":3,"Name":"ColumnInteger","Text":"Integer","TextAlign":2},
+    {"Index":4,"Name":"ColumnDecimal","Text":"Decimal","TextAlign":2},
 ],
             </textarea>
         </div>
