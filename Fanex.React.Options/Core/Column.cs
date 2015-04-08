@@ -23,6 +23,14 @@ namespace Fanex.React.Options.Core
             MergeRowNumber = 1;
         }
 
+        public Column(int index, object value, CellDataType cellDataType, TextAlign textAlign = TextAlign.Right)
+        {
+            Index = index;
+            Value = value;
+            CellDataType = cellDataType;
+            TextAlign = textAlign;
+        }
+
         public int Index { get; set; }
 
         public string Name { get; set; }
@@ -36,7 +44,7 @@ namespace Fanex.React.Options.Core
         public CellDataType CellDataType { get; set; }
 
         public object Value { get; set; }
-                
+
         public int MergeColumnNumber { get; set; }
 
         public int MergeRowNumber { get; set; }
@@ -64,7 +72,7 @@ namespace Fanex.React.Options.Core
                 }
             }
         }
-        
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Justification = "Reviewed.")]
         public string DisplayText
         {

@@ -27,6 +27,7 @@
                 HeaderColumns = GetHeader(),
                 BodyRows = bodyRows,
                 FooterRows = GetFooterRows(),
+                ColumnWidthList = new List<int> { 60, 100, 250, 100, 150, 150 }
             };
 
             return gridOptions;
@@ -56,10 +57,10 @@
                     PageSizeList = new List<int> { 50, 100, 200, 500 },
                     TotalItems = bodyRows.Count,
                 },
-                HeaderStyle = Fanex.React.Options.Formatter.HeaderStyle.HeaderOneLine,
                 HeaderColumns = GetHeader(),
                 BodyRows = pagingBodyRows,
                 FooterRows = GetFooterRows(),
+                ColumnWidthList = new List<int> { 60, 100, 250, 100, 150, 150 }
             };
 
             return gridOptions;
@@ -78,10 +79,10 @@
                 NoDataText = "No data",
                 MaxContentHeight = 250,
                 ShowFooter = true,
-                HeaderStyle = Fanex.React.Options.Formatter.HeaderStyle.HeaderOneLine,
                 HeaderColumns = GetHeader(),
                 BodyRows = bodyRows,
                 FooterRows = GetFooterMergeColumnRows(),
+                ColumnWidthList = new List<int> { 60, 100, 250, 100, 150, 150 }
             };
 
             return gridOptions;
@@ -106,6 +107,7 @@
                 HeaderColumns = GetHeader(),
                 BodyRows = bodyRows,
                 FooterRows = GetFooterRows(),
+                ColumnWidthList = new List<int> { 60, 100, 250, 100, 150, 150 }
             };
 
             return gridOptions;

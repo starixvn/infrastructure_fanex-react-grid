@@ -19,6 +19,15 @@ namespace Fanex.React.Options.Core
             MergeRowNumber = 1;
         }
 
+        public HeaderColumns(int index, string headerText, TextAlign textAlign)
+        {
+            Index = index;
+            Text = headerText;
+            TextAlign = textAlign;
+            MergeColumnNumber = 1;
+            MergeRowNumber = 1;
+        }
+
         public int Index { get; set; }
 
         public string Name { get; set; }
@@ -32,6 +41,24 @@ namespace Fanex.React.Options.Core
         public string Text { get; set; }
 
         public TextAlign TextAlign { get; set; }
+
+        public string TextAlignment
+        {
+            get
+            {
+                switch (TextAlign)
+                {
+                    case TextAlign.Left:
+                        return "left";
+                    case TextAlign.Right:
+                        return "right";
+                    case TextAlign.Center:
+                        return "center";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
 
         public string TDClass { get; set; }
     }

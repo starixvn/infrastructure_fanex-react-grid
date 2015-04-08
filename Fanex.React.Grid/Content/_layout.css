@@ -1,7 +1,7 @@
 ﻿/* File Created: March 26, 2015 */
 .container {
 	float: left;
-	min-height: 900px;
+	/*min-height: 900px;*/
 	/*border: 1px solid #cccccc;*/
 }
 .left-panel {

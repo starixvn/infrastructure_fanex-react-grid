@@ -105,8 +105,8 @@ function generateData(numOfRows){
         var mergeColumnNumber = i % 10 == 0 ? 3 : 1;
         var columns = [
             {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center"},
-            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center"},
-            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left"},
+            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center","MergeRowNumber":mergeRowNumber},
+            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left","MergeColumnNumber":mergeColumnNumber},
             {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right"},
             {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right"},
             {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right"}
@@ -127,6 +127,7 @@ function generateFooter(){
         var mergeRows = i==0?2:1;
         var columns = [
             {"Index":0,"Value":1,"MergeColumnNumber":2,"MergeRowNumber":mergeRows,"TextAlignment":"center","DisplayText":"Total"},
+            {"Index":1,"Value":1,"TextAlignment":"center","DisplayText":"Total"},
             {"Index":2,"Value":"","TextAlignment":"left","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
             {"Index":3,"Value":330243,"TextAlignment":"right","DisplayText":"330,243"},
             {"Index":4,"Value":10906.0248046955,"TextAlignment":"right","DisplayText":"10,906.02"},

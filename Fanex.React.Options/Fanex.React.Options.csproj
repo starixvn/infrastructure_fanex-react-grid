@@ -51,6 +51,9 @@
     <Compile Include="Formatter\HeaderStyle.cs" />
     <Compile Include="Formatter\TextAlign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\LinkInformation.cs" />
+    <Compile Include="Utility\LinkParameter.cs" />
+    <Compile Include="Utility\RenderLink.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

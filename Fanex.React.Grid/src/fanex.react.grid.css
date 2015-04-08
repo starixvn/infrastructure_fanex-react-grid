@@ -48,7 +48,11 @@ div.react-header
 div.react-header div.div-react-header
 {
     float:left;
-    padding-right: 17px;
+    padding-right: 19px;
+}
+.div-react-freeze-fixed {
+	display: inline-block;
+	
 }
 div.react-header div.div-react-header table
 {
@@ -91,11 +95,6 @@ div.react-data table
     border-collapse: collapse;
 }
 
-div.react-data table tr.hover-row:hover
-{
-    
-}
-
 div.react-data table tr.content-row td
 {
     height:auto;
@@ -125,7 +124,7 @@ div.react-footer
 div.react-footer div.div-react-footer
 {
     float:left;
-    padding-right: 17px;    
+    padding-right: 19px;    
 }
 
 div.react-footer div.div-react-footer table
@@ -205,6 +204,10 @@ table.react-footer .footer-row td div {
 }
 
 /* ------------------------------------custom css area --------------------------------------*/
+.react-grid-link {
+	cursor: pointer;
+	color: #0078ae;
+}
 .react-title {
 	background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;
     border: 1px solid #a3d1e1;
@@ -242,6 +245,20 @@ div.react-data table tr.content-row td
 }
 div.react-data table tr.odd-row {
 	background-color: #eeeeee;
+}
+
+.div-react-scroll {
+	border-right: 1px solid #a3d1e1;
+}
+.react-grid-scroll-area {
+	border-right: 1px solid #a3d1e1;
+}
+.div-react-scroll-bar-freeze {
+	border-left: 1px solid #a3d1e1;
+}
+.div-react-scroll-bar-scroll {
+	border-left: 1px solid #a3d1e1;
+	border-right: 1px solid #a3d1e1;
 }
 
 .footer-border-top {

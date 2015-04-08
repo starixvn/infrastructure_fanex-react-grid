@@ -110,5 +110,10 @@ namespace Fanex.React.Options.Formatter
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Justification = "Reviewed.")]
         DateTimeMmmmddyyyy = 43,
+
+        /// <summary>
+        /// Link type.
+        /// </summary>
+        Link = 5,
     }
 }

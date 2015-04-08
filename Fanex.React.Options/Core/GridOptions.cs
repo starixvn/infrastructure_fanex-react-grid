@@ -19,7 +19,8 @@ namespace Fanex.React.Options.Core
             ShowTitle = false;
             NoDataText = "No data.";
             MaxContentHeight = 500;
-            MaxContentWidth = 1200;
+            MaxContentWidth = 1000;
+            ScrollAreaFixedWidth = 500;
             HeaderStyle = Formatter.HeaderStyle.HeaderOneLine;
             PagingOptions = new PagingOptions();
         }
@@ -50,73 +51,17 @@ namespace Fanex.React.Options.Core
 
         public string RenderLargeDataCallBack { get; set; }
 
-        public int GridWidth
-        {
-            get
-            {
-                var gridWidth = 0;
-                var scrollWidth = 20;
-                gridWidth += scrollWidth;
-                if (GroupHeaders != null)
-                {
-                    foreach (var groupHeader in GroupHeaders)
-                    {
-                        if (groupHeader.MergeRowNumber > 1)
-                        {
-                            gridWidth += groupHeader.Width;
-                        }
-                    }
-                }
+        public int NumberOfFreezeColumn { get; set; }
 
-                if (HeaderColumns != null)
-                {
-                    foreach (var col in HeaderColumns)
-                    {
-                        gridWidth += col.Width;
-                    }
-                }
+        public int GridWidth { get; set; }
 
-                return gridWidth;
-            }
-        }
+        public int FreezeAreaWidth { get; set; }
 
-        public List<int> ColumnWidthList
-        {
-            get
-            {
-                var list = new List<int>();
-                if (GroupHeaders != null)
-                {
-                    for (int i = 0; i < GroupHeaders.Count; i++)
-                    {
-                        int startInHeader = 0;
-                        if (GroupHeaders[i].MergeRowNumber > 1)
-                        {
-                            list.Add(GroupHeaders[i].Width);
-                        }
-                        else
-                        {
-                            int j;
-                            for (j = startInHeader; j < HeaderColumns.Count; j++)
-                            {
-                                list.Add(HeaderColumns[j].Width);
-                            }
+        public int ScrollAreaWidth { get; set; }
 
-                            startInHeader = j;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var cell in HeaderColumns)
-                    {
-                        list.Add(cell.Width);
-                    }
-                }
+        public int ScrollAreaFixedWidth { get; set; }
 
-                return list;
-            }
-        }
+        public List<int> ColumnWidthList { get; set; }
 
         public HeaderStyle HeaderStyle { get; set; }
 
