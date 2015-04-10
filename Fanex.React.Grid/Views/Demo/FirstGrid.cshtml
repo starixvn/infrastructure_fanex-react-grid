@@ -29,10 +29,10 @@
             <li><h3>Server render:</h3>
                 <div>
                 - html: <br />
-                <textarea rows="1" cols="100" readonly="readonly"><div id="react-grid"></div>
+                <textarea rows="1" cols="100"><div id="react-grid"></div>
                 </textarea><br />
                 - server code: <br />
-                <textarea rows="10" cols="100" readonly="readonly">
+                <textarea rows="10" cols="100">
 public JsonResult FirstPage(int numOfRow)
 {
     var reactService = new FirstPageService();
@@ -105,7 +105,7 @@ private List<Row> GetFooterRows()
 }
                 </textarea><br />
                 - render component:<br />
-                <textarea rows="8" cols="100" readonly="readonly">
+                <textarea rows="8" cols="100">
 var criteria = new FormData();
 criteria.append('numOfRow', $("#num-of-row").val());
 var xhr = new XMLHttpRequest();
@@ -124,10 +124,10 @@ xhr.send(criteria);
             <li><h3>Client render:</h3>
                 <div>
                 - html: <br />
-                <textarea rows="1" cols="100" readonly="readonly"><div id="react-grid"></div>
+                <textarea rows="1" cols="100"><div id="react-grid"></div>
                 </textarea><br />
                 - client code: <br />
-                <textarea rows="10" cols="100" readonly="readonly">
+                <textarea rows="10" cols="100">
 var gridOptions = {
     ShowTitle: false,
     TitleText: '',
@@ -187,7 +187,7 @@ function generateData(numOfRows){
 }
                 </textarea><br />
                 - render component:<br />
-                <textarea rows="3" cols="100" readonly="readonly">
+                <textarea rows="3" cols="100">
 React.render(
     <ReactGrid gridOptions={gridOptions} containerId='react-grid' />,
     document.getElementById('react-grid')

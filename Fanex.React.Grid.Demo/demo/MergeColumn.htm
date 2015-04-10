@@ -54,11 +54,11 @@
         <h3>Source</h3>
         <div>            
             - set the property:<br>
-            <textarea readonly="readonly" cols="120" rows="2">MergeColumnNumber: an integer number which is between 2 and 'number of columns' after this column.
+            <textarea cols="120" rows="2">MergeColumnNumber: an integer number which is between 2 and 'number of columns' after this column.
 MergeRowNumber: an integer number which is between 2 and 'number of rows' after this row.
             </textarea> <br>
             - client code:<br>
-            <textarea readonly="readonly" cols="120" rows="20">function generateData(numOfRows){
+            <textarea cols="120" rows="20">function generateData(numOfRows){
     var bodyRows = [];
     for(var i = 0; i&lt; numOfRows;i++){
         var mergeRowNumber = i % 10 == 0 &amp;&amp; i &lt; numOfRows - 4 ? 3 : 1;

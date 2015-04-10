@@ -9,6 +9,7 @@ namespace Fanex.React.Options.Core
     using System;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.React.Options.Formatter;
+    using Fanex.React.Options.Utility;
 
     /// <summary>
     /// TODO: Update summary.
@@ -45,6 +46,8 @@ namespace Fanex.React.Options.Core
 
         public object Value { get; set; }
 
+        public bool IsRowIndex { get; set; }
+
         public int MergeColumnNumber { get; set; }
 
         public int MergeRowNumber { get; set; }
@@ -54,6 +57,8 @@ namespace Fanex.React.Options.Core
         public bool Invisible { get; set; }
 
         public string CellClass { get; set; }
+
+        public LinkInformation LinkInformation { get; set; }
 
         public string TextAlignment
         {
@@ -86,7 +91,7 @@ namespace Fanex.React.Options.Core
                     case CellDataType.Integer:
                     case CellDataType.IntegerRedNegative:
                     case CellDataType.IntegerRedPositive:
-                        return Value == null ? string.Empty : ((int)Value).ToString("0,0");
+                        return Value == null ? string.Empty : ((int)Value).ToString("#,0");
 
                     case CellDataType.Decimal:
                     case CellDataType.DecimalRedNegative:
@@ -117,7 +122,7 @@ namespace Fanex.React.Options.Core
                     case CellDataType.PercentageRedParenthesesNegative:
                         return Value == null ? string.Empty : (100 * Math.Abs((decimal)Value)).ToString("(0,0.00%)");
                     default:
-                        return Value.ToString();
+                        return string.Empty;
                 }
             }
         }

@@ -16,7 +16,6 @@ function getGridOptionsFromServer() {
    hideDemo();
     var criteria = new FormData();
     criteria.append('numOfRow', $("#num-of-row").val());
-    criteria.append('numOfFreeze', $("#num-of-freeze").val());
     var xhr = new XMLHttpRequest();
     xhr.open('post', getClientUrl("Utility/RenderLinkData"), true);
     xhr.onload = function () {
@@ -29,7 +28,10 @@ function getGridOptionsFromServer() {
     xhr.send(criteria);
 
 }
-
+function functionName(param)
+{
+    alert(param.id+" "+param.name);   
+}
 function getGridOptionsFromClient() {
     hideDemo();
     var gridOptions = {
@@ -81,10 +83,23 @@ function hideDemo(){
 function generateData(numOfRows){
     var bodyRows = [];
     for(var i = 0; i< numOfRows;i++){
+        var linkInfo = {
+            DisplayText : "link render text",
+            FunctionName : "functionName",
+            ClassName : "demo-link-class",
+            Parameters : [
+                {
+                    Name : "id", Value : i
+                },
+                {
+                    Name : "name", Value : "text param"
+                }
+            ]
+        };
         var columns = [
             {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center","CellClass":""},
             {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center","CellClass":""},
-            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left","CellClass":""},
+            {"Index":2,"CellDataType":CellDataType.Link,"LinkInformation":linkInfo,"TextAlignment":"left","CellClass":""},
             {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right","CellClass":""},
             {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right","CellClass":""},
             {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right","CellClass":""}

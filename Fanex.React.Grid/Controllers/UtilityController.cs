@@ -28,11 +28,24 @@
             return View();
         }
 
-        public JsonResult RenderLinkData(int numOfRow, int numOfFreeze)
+        public JsonResult RenderLinkData(int numOfRow)
         {
             var reactService = new UtilityService();
             var data = reactService.GetReactWithLinkGridOptions(numOfRow);
-            data.NumberOfFreezeColumn = numOfFreeze;
+            var json = Json(data);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+        public ActionResult SortData()
+        {
+            return View();
+        }
+
+        public JsonResult SortDataData(int numOfRow)
+        {
+            var reactService = new UtilityService();
+            var data = reactService.GetSortDataGridOptions(numOfRow);
             var json = Json(data);
             json.MaxJsonLength = int.MaxValue;
             return json;

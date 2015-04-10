@@ -2,6 +2,7 @@
     ViewBag.Title = "FreezeColumn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section js
 {
     <script type="text/jsx" src="@Url.Content("~/Scripts/Utility/demo-render-link.js")"></script>
@@ -9,15 +10,14 @@
 <ul>
     <li>
         <h3>
-            Demo - Freeze Column</h3>
+            Demo - Render Link</h3>
         <div>
             Num of row:
             <input type="text" id="num-of-row" value="220" />
-            Num of freeze column:
-            <input type="text" id="num-of-freeze" value="0" />
+           
             <input type="button" value="Render" onclick="getGridOptionsFromServer();" />
-            @*<input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />
-            <input type="button" value="Get full data" onclick="getFullData();" />*@
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />
+            @*<input type="button" value="Get full data" onclick="getFullData();" />*@
             <input type="button" value="Hide" onclick="hideDemo();" />
         </div>
         <div id="react-grid-server">
@@ -28,9 +28,47 @@
     <li>
         <h3>
             Source</h3>
-            - set property:
-        <textarea rows="1" cols="100" readonly="readonly">
-            NumberOfFreezeColumn: number of freeze column.
+            This link call a javascript function, its parameter is an object. <br />
+            Set: <br />
+             - CellDataType:CellDataType.Link,<br />
+             - LinkInformation:linkInfo<br />
+            Example:
+        <textarea rows="30" cols="100">
+function generateData(numOfRows){
+    var bodyRows = [];
+    for(var i = 0; i< numOfRows;i++){
+        var linkInfo = {
+            DisplayText : "link render text",
+            FunctionName : "functionName",
+            ClassName : "your-link-class",
+            Parameters : [{
+                    Name : "id", Value : i
+                },
+                {
+                    Name : "name", Value : "text param"
+                }]
+        };
+        var columns = [
+            {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center","CellClass":""},
+            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center","CellClass":""},
+            {"Index":2,"CellDataType":CellDataType.Link,"LinkInformation":linkInfo,"TextAlignment":"left","CellClass":""},
+            {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right","CellClass":""},
+            {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right","CellClass":""},
+            {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right","CellClass":""}
+        ];
+        var row = {
+            RowIndex: i,
+            Columns: columns
+        };
+        bodyRows.push(row);
+    }
+    return bodyRows;
+}
+
+function functionName(param)
+{
+    alert(param.id+" "+param.name);   
+}
         </textarea><br />
     </li>
 </ul>

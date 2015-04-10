@@ -23,6 +23,8 @@ namespace Fanex.React.Options.Core
             ScrollAreaFixedWidth = 500;
             HeaderStyle = Formatter.HeaderStyle.HeaderOneLine;
             PagingOptions = new PagingOptions();
+            SortColumnIndex = -1;
+            SortDirection = string.Empty;
         }
 
         public bool ShowTitle { get; set; }
@@ -62,6 +64,14 @@ namespace Fanex.React.Options.Core
         public int ScrollAreaFixedWidth { get; set; }
 
         public List<int> ColumnWidthList { get; set; }
+
+        public List<int> SortColumnList { get; set; }
+
+        public int SortColumnIndex { get; set; }
+
+        public string SortDirection { get; set; }
+
+        public bool IsSortOnPage { get; set; }
 
         public HeaderStyle HeaderStyle { get; set; }
 

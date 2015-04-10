@@ -69,7 +69,17 @@ table.react-header .header-row th {
     vertical-align: middle;            
     font-size: 14px;
 }
-
+table.react-header .header-row th .react-header-text{
+    display: inline;	
+}
+table.react-header .header-row th .react-sort-icon {
+	margin: 0 2px;
+	height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    cursor: pointer;	
+}
 table.react-header .header-row th.header-line-1 {
 	line-height: 25px;
 }
@@ -194,8 +204,8 @@ table.react-footer .footer-row td div {
 	
 }
 .react-paging .button-icon .ui-icon {
-	 margin: 0 4px;
-	 height: 16px;
+	margin: 0 4px;
+	height: 16px;
     width: 16px;
     background-repeat: no-repeat;
     display: block;
@@ -206,7 +216,7 @@ table.react-footer .footer-row td div {
 /* ------------------------------------custom css area --------------------------------------*/
 .react-grid-link {
 	cursor: pointer;
-	color: #0078ae;
+	color: #0033ff;
 }
 .react-title {
 	background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;
@@ -224,7 +234,17 @@ table.react-header .header-row th {
 table.react-header .header-row-bottom th {        
     border-top: 1px solid #a3d1e1;
 }
-
+table.react-header .header-row th .react-sort-icon {	
+	background-image: url("images/ui-icons_e0fdff_256x240.png");
+}
+table.react-header .header-row th .desc
+{
+    background-position: -64px -192px;
+}
+table.react-header .header-row th .asc 
+{
+    background-position: -96px -192px;
+}
 .react-data {
 	background: url("images/ui-bg_inset-hard_100_fcfdfd_1x100.png") repeat-x scroll 50% bottom #fcfdfd;
 	border: 1px solid #a6c9e2;

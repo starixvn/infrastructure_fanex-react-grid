@@ -51,14 +51,46 @@
             var bodyRows = GetBodyRowsWithLink(numOfRow);
             var gridOptions = new GridOptions
             {
-                ShowTitle = true,
+                ShowTitle = false,
                 TitleText = "Grid demo",
                 NoDataText = "No data",
-                ShowFooter = true,
+                ShowFooter = false,
                 MaxContentHeight = 250,
                 OddEvenRow = true,
                 IsHighlightHover = false,
                 ColumnWidthList = new List<int>() { 60, 100, 250, 100, 120, 120, 120, 100 },
+                IsPaging = false,
+                IsServerPaging = false,
+                NumberOfFreezeColumn = 0,
+                GroupHeaders = GetGroupHeader(),
+                HeaderColumns = GetHeader(),
+                BodyRows = bodyRows,
+                FooterRows = GetFooterRows(),
+            };
+
+            return gridOptions;
+        }
+
+        /// <summary>
+        /// GET REACT GRID OPTIONS.
+        /// </summary>
+        /// <param name="numOfRow">NUMBER OF ROW.</param>
+        /// <returns>GRID OPTIONS.</returns>
+        public GridOptions GetSortDataGridOptions(int numOfRow)
+        {
+            var bodyRows = GetBodyRowsSortData(numOfRow);
+            var gridOptions = new GridOptions
+            {
+                ShowTitle = false,
+                TitleText = "Grid demo",
+                NoDataText = "No data",
+                ShowFooter = false,
+                MaxContentHeight = 250,
+                MaxContentWidth = 1100,
+                OddEvenRow = true,
+                IsHighlightHover = false,
+                ColumnWidthList = new List<int>() { 60, 100, 250, 100, 125, 125, 125, 100 },
+                SortColumnList = new List<int>() { 1, 2, 3, 4, 5, 6, 7 },
                 IsPaging = false,
                 IsServerPaging = false,
                 NumberOfFreezeColumn = 0,
@@ -134,18 +166,52 @@
             for (int i = 0; i < numOfRow; i++)
             {
                 var value = RandomText();
-                var param = new List<LinkParameter>() { new LinkParameter() { Value = i, IsNumber = true }, new LinkParameter() { Value = value } };
-                var linkInfo = new LinkInformation() { DisplayText = value, FunctionName = "functionName", Parameters = param };
-                var link = RenderLink.Render(linkInfo);
+                var param = new List<LinkParameter>()
+                {
+                    new LinkParameter()
+                    {
+                        Name = "id", Value = i
+                    },
+                    new LinkParameter()
+                    {
+                        Name = "name", Value = value
+                    }
+                };
+                var linkInfo = new LinkInformation() { DisplayText = value, FunctionName = "functionName", ClassName = "demo-link-class", Parameters = param };
                 var columns = new List<Column>();
                 columns.Add(new Column() { Index = 0, TextAlign = TextAlign.Center, CellDataType = CellDataType.Integer, Value = i + 1 });
                 columns.Add(new Column() { Index = 1, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Value = RandomDate() });
-                columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Left, CellDataType = CellDataType.Link, Value = link });
+                columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Left, CellDataType = CellDataType.Link, LinkInformation = linkInfo });
                 columns.Add(new Column() { Index = 3, CellDataType = CellDataType.Integer, Value = RandomInt() });
                 columns.Add(new Column() { Index = 4, Value = RandomDecimal() });
                 columns.Add(new Column() { Index = 5, Value = RandomDecimal() });
                 columns.Add(new Column() { Index = 6, CellDataType = CellDataType.DecimalRedPositive, Value = (i % 2 == 0 ? 1 : -1) * RandomDecimal() });
                 columns.Add(new Column() { Index = 7, CellDataType = CellDataType.Percentage, Value = RandomMargin() });
+                rows.Add(new Row() { Columns = columns, RowIndex = i });
+            }
+
+            return rows;
+        }
+
+        /// <summary>
+        /// GET BODY ROWS.
+        /// </summary>
+        /// <param name="numOfRow">NUMBER OF ROWS.</param>
+        /// <returns>LIST OF ROW.</returns>
+        private List<Row> GetBodyRowsSortData(int numOfRow)
+        {
+            var rows = new List<Row>();
+            for (int i = 0; i < numOfRow; i++)
+            {
+                var columns = new List<Column>();
+                columns.Add(new Column() { Index = 0, TextAlign = TextAlign.Center, CellDataType = CellDataType.Integer, Value = i + 1, IsRowIndex = true });
+                columns.Add(new Column() { Index = 1, TextAlign = TextAlign.Center, CellDataType = CellDataType.DateTimeMMMdyyyy, Value = RandomDate() });
+                columns.Add(new Column() { Index = 2, TextAlign = TextAlign.Left, CellDataType = CellDataType.Text, Value = RandomText() });
+                columns.Add(new Column() { Index = 3, CellDataType = CellDataType.Integer, Value = RandomInt() * (i % 10) });
+                columns.Add(new Column() { Index = 4, Value = RandomDecimal() * (i % 10) });
+                columns.Add(new Column() { Index = 5, Value = RandomDecimal() * (i % 10) });
+                columns.Add(new Column() { Index = 6, CellDataType = CellDataType.DecimalRedPositive, Value = (i % 2 == 0 ? 1 : -1) * RandomDecimal() * (i % 10) });
+                columns.Add(new Column() { Index = 7, CellDataType = CellDataType.Percentage, Value = RandomMargin() * (i % 10) });
                 rows.Add(new Row() { Columns = columns, RowIndex = i });
             }
 

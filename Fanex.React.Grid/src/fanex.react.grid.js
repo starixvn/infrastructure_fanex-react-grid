@@ -21,7 +21,7 @@ var ReactGrid = React.createClass({
         return {
             options : {},
             pagingCallbackFunction: this.props.pagingCallBackFunction,            
-            largeDataPageIndex: 100
+            largeDataPageIndex: 100            
         };
     },
     componentWillMount: function() {
@@ -88,7 +88,13 @@ var ReactGrid = React.createClass({
             }
         }        
     },
-    render: function() {
+    onSortClickHandle: function(columnIndex, sortDirection){
+        var gridOptions = this.state.options;
+        gridOptions.SortColumnIndex = columnIndex;
+        gridOptions.SortDirection = sortDirection;
+        this.setState({ options: gridOptions });
+    },
+    render: function() {        
         var gridOptions = this.state.options;
         if(gridOptions.PagingOptions.TotalItems === null || gridOptions.PagingOptions.TotalItems === undefined || gridOptions.PagingOptions.TotalItems === 0){
             gridOptions.PagingOptions.TotalItems = gridOptions.BodyRows.length;
@@ -127,7 +133,7 @@ var ReactGrid = React.createClass({
                 {titleNode}
                 <div id={containerId + '-react-content'} style = {{maxWidth : gridOptions.MaxContentWidth, overflowX: "auto"}}>
                     <div id={containerId + '-react-header'} className="react-header" style={{"width": gridOptions.GridWidth}}>
-                        <ReactHeader gridOptions={gridOptions} containerId={containerId}/>
+                        <ReactHeader gridOptions={gridOptions} containerId={containerId} onSortClickHandle={this.onSortClickHandle}/>
                     </div>
                     <div id={containerId+'-react-data'} className="react-data" onScroll={this.handleScroll} style={{overflowY:gridOptions.BodyRows.length <= 1 ? "hidden" :"scroll",overflowX: "hidden", maxHeight:gridOptions.MaxContentHeight, 'width': gridOptions.GridWidth}} >
                         <ReactData gridOptions={gridOptions} containerId={containerId} isLargeData={this.state.isLargeData} largeDataPageIndex={this.state.largeDataPageIndex}/>
@@ -157,13 +163,40 @@ var ReactTitle = React.createClass({
         );
     }
 });
+var ReactSortIcon = React.createClass({
+    onSortClickHandle: function(columnIndex){
+        var gridOptions = this.props.gridOptions;
+        var currentColumnIndex = gridOptions.SortColumnIndex;
+        var currentsortDirection = gridOptions.SortDirection;
+        var sortDirection;
+        if(columnIndex === currentColumnIndex){
+            sortDirection = (currentsortDirection === 'desc' || currentsortDirection === '') ? 'asc' : 'desc';
+        } else {
+            sortDirection = 'asc';
+        }
+        this.props.onSortClickHandle(columnIndex, sortDirection);
+    },
+    render: function() {
+        var gridOptions = this.props.gridOptions;
+        var sortColumnList = gridOptions.SortColumnList;
+        var column=this.props.column;
+        var sortDirection = ((gridOptions.SortDirection === '' || gridOptions.SortDirection === 'asc') && gridOptions.SortColumnIndex === column.Index ? 'desc' : 'asc');
+        if(sortColumnList !== undefined && sortColumnList.indexOf(column.Index)>-1 && (column.MergeColumnNumber === undefined || column.MergeColumnNumber === 1)){
+            return (
+                <div className={"react-sort-icon " + sortDirection} onClick={this.onSortClickHandle.bind(this, column.Index)}></div>
+            );
+        } else {
+            return <div></div>;
+        }
+    }
+});
 var ReactHeader = React.createClass({
     render: function() {
         var gridOptions = this.props.gridOptions;
         var containerId = this.props.containerId;
         var columnWidths = gridOptions.ColumnWidthList;        
         var numOfFreeze = gridOptions.NumberOfFreezeColumn;
-
+        var onSortClickHandle = this.props.onSortClickHandle;
         var headerColumns = gridOptions.HeaderColumns;
         var headerFreezeColumns=[];
         var headerScrollColumns=[];
@@ -178,19 +211,26 @@ var ReactHeader = React.createClass({
         var headerFreezeNodes = headerFreezeColumns.map(function (item, i) {
             headerClassName += " " + item.TDClass;
             return (
-                <th className={headerClassName} style={{"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]}} key={i}>{item.Text}</th>
+                <th className={headerClassName} style={{"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]}} key={i}>
+                    <div className="react-header-text">{item.Text}</div>
+                    <ReactSortIcon gridOptions={gridOptions} column={item} onSortClickHandle={onSortClickHandle}/>
+                </th>
             );
         });
         var headerScrollNodes = headerScrollColumns.map(function (item, i) {
             headerClassName += " " + item.TDClass;
             return (
-                <th className={headerClassName} style={{"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]}} key={i}>{item.Text}</th>
+                <th className={headerClassName} style={{"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]}} key={i}>
+                    <div className="react-header-text">{item.Text}</div>
+                    <ReactSortIcon gridOptions={gridOptions} column={item} onSortClickHandle={onSortClickHandle}/>
+                </th>
             );
         });
 
+        var reactHeaderHeigth = 26;
         var groupHeaderFreezeNodes=[];
         var groupHeaderScrollNodes=[];
-        if(gridOptions.GroupHeaders !== null && gridOptions.GroupHeaders !== []){
+        if(gridOptions.GroupHeaders !== null && gridOptions.GroupHeaders !== [] && gridOptions.GroupHeaders.length > 0){            
             var groupHeader = gridOptions.GroupHeaders;
             var groupHeaderFreeze=[];
             var groupHeaderScroll=[];
@@ -205,21 +245,30 @@ var ReactHeader = React.createClass({
             groupHeaderFreezeNodes = groupHeaderFreeze.map(function (item, i) {
                 var className = "header-line-" + (headerFreezeColumns.length === 0 ? "2" : "1");
                 className += " " + item.TDClass;
+                var headerStyle = {"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]};
                 return (
-                    <th colSpan={item.MergeColumnNumber} rowSpan={item.MergeRowNumber} className={className} style={{"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]}} key={i}>{item.Text}</th>
+                    <th colSpan={item.MergeColumnNumber} rowSpan={item.MergeRowNumber} className={className} style={headerStyle} key={i}>
+                        <div className="react-header-text">{item.Text}</div>
+                        <ReactSortIcon gridOptions={gridOptions} column={item} onSortClickHandle={onSortClickHandle}/>
+                    </th>
                 );
             });
             groupHeaderScrollNodes = groupHeaderScroll.map(function (item, i) {
                 var className = "header-line-" + (headerScrollColumns.length === 0 ? "2" : "1");
                 className += " " + item.TDClass;
+                var headerStyle = {"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]};
                 return (
-                    <th colSpan={item.MergeColumnNumber} rowSpan={item.MergeRowNumber} className={className} style={{"width" : columnWidths[item.Index]<=0 ? item.Width : columnWidths[item.Index]}} key={i}>{item.Text}</th>
+                    <th colSpan={item.MergeColumnNumber} rowSpan={item.MergeRowNumber} className={className} style={headerStyle} key={i}>
+                        <div className="react-header-text">{item.Text}</div>
+                        <ReactSortIcon gridOptions={gridOptions} column={item} onSortClickHandle={onSortClickHandle}/>
+                    </th>
                 );
             });
+            reactHeaderHeigth=51;
         }
                 
         return (
-            <div className="div-react-header">
+            <div className="div-react-header" style={{"height" : reactHeaderHeigth,overflowY: "hidden"}}>
                 <div className="div-react-freeze-fixed" style={{"width" : gridOptions.FreezeAreaWidth}}>
                     <div className="div-react-header-freeze">
                         <table className="react-header" cellPadding="0" cellSpacing="0">
@@ -257,6 +306,7 @@ var ReactData = React.createClass({
         var gridOptions = this.props.gridOptions;      
         var containerId = this.props.containerId;  
         var numOfFreeze = gridOptions.NumberOfFreezeColumn;
+        var isSort = gridOptions.SortColumnList !== undefined && gridOptions.SortColumnList.length > 0;
 
         if(gridOptions.BodyRows.length === 0) {
             return (
@@ -267,6 +317,17 @@ var ReactData = React.createClass({
                 </table>
             );
         };       
+
+        var compare = function(a,b){
+            if (a.Columns[gridOptions.SortColumnIndex].Value < b.Columns[gridOptions.SortColumnIndex].Value)
+                return gridOptions.SortDirection === 'asc' ? -1 : 1;
+            if (a.Columns[gridOptions.SortColumnIndex].Value > b.Columns[gridOptions.SortColumnIndex].Value)
+                return gridOptions.SortDirection === 'asc' ? 1 : -1;
+            return 0;
+        };
+        if(!gridOptions.IsSortOnPage && gridOptions.SortColumnIndex>-1 && gridOptions.SortDirection !== ''){            
+            gridOptions.BodyRows.sort(compare);
+        }
 
         var bodyData = [];
         var pagingOptions = gridOptions.PagingOptions;        
@@ -286,6 +347,9 @@ var ReactData = React.createClass({
             } else {
                 bodyData = gridOptions.BodyRows;
             }
+        }
+        if(gridOptions.IsSortOnPage && gridOptions.SortColumnIndex>-1 && gridOptions.SortDirection !== ''){            
+            bodyData.sort(compare);
         }
 
         var columnWidthList = gridOptions.ColumnWidthList;
@@ -358,7 +422,7 @@ var ReactData = React.createClass({
             if(isOddEven && (row.RowIndex % 2 == 1)){
                 rowClassName += " odd-row";
             }
-            return (<ReactDataRow isFreezeRow={false} numberOfFreezeColumn={numOfFreeze} isHighlightHover={isHighLightHover} dataRows={row} key={i} classNameOddEven={rowClassName} />);
+            return (<ReactDataRow isFreezeRow={false} numberOfFreezeColumn={numOfFreeze} isHighlightHover={isHighLightHover} dataRows={row} key={i} rowNumber={1+i} isSort={isSort} classNameOddEven={rowClassName} />);
         });
         var divHeight = bodyData.length * 25;
         return (
@@ -399,20 +463,26 @@ var ReactDataRow = React.createClass({
             hovered: false
         })
     },
+    
     render: function() {        
         var numberOfFreezeColumn = this.props.numberOfFreezeColumn;
         var isFreezeRow = this.props.isFreezeRow;
+        var isSort = this.props.isSort;
+        var rowNumber = this.props.rowNumber;
         var columns = isFreezeRow ? this.props.dataRows.Columns.slice(0, numberOfFreezeColumn) : this.props.dataRows.Columns.slice(numberOfFreezeColumn, this.props.dataRows.Columns.length);
         var dataNodes = columns.map(function (cell, i) {
-            var cellClassName = cell.TextAlignment + " " + cell.TDClass;
+            var tdClassName = cell.TextAlignment + " " + (cell.TDClass !== null && cell.TDClass !== undefined ? cell.TDClass : '');
             if(cell.IsHightLight){
-                cellClassName += " row-highlight";
+                tdClassName += " row-highlight";
             }
             var displayText;
-            if(cell.CellDataType === CellDataType.Link){
-                displayText=<div>{cell.Value}</div>;
-                
-                console.log(displayText);
+            var cellClassName=(cell.CellClass !== null ? cell.CellClass : '') + " " +ReactHelper.formatRedColor(cell);
+            if(isSort && cell.IsRowIndex){
+                displayText = rowNumber;
+            }
+            else if(cell.CellDataType === CellDataType.Link){
+                cellClassName +=" react-grid-link";
+                displayText=<ReactLink linkInformation={cell.LinkInformation} />;                
             }
             else if(cell.DisplayText === undefined || cell.DisplayText === null || cell.DisplayText === ''){
                 displayText = ReactHelper.formatCellData(cell.Value, cell.CellDataType);
@@ -421,7 +491,7 @@ var ReactDataRow = React.createClass({
             }
             
             if(!cell.Invisible){
-                return (<td colSpan={cell.MergeColumnNumber} rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={cellClassName}><div className={cell.CellClass + " " +ReactHelper.formatRedColor(cell)}>{displayText}</div></td>);
+                return (<td colSpan={cell.MergeColumnNumber} rowSpan={cell.MergeRowNumber} style={{"width" : cell.Width}} key={i} className={tdClassName}><div className={cellClassName}>{displayText}</div></td>);
             }
         });
         var hoverClass =  this.state.hovered && this.props.isHighlightHover ? " row-highlight" : "";
@@ -429,6 +499,27 @@ var ReactDataRow = React.createClass({
             <tr className={this.props.classNameOddEven + hoverClass} onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
                 {dataNodes}
             </tr>
+        );
+    }
+});
+var ReactLink = React.createClass({
+    onLinkClickHandle: function(linkInformation){        
+        if(typeof(linkInformation.FunctionName === 'function')){
+            var paramList = {};
+            for(var index=0;index<linkInformation.Parameters.length;index++)
+            {
+                var param = linkInformation.Parameters[index];
+                paramList[param.Name] = param.Value;
+            }
+            window[linkInformation.FunctionName](paramList);
+        } else {
+            console.log("Input correct function!");
+        }
+    },
+    render: function() {
+        var linkClassName = this.props.linkInformation.ClassName !== undefined ? this.props.linkInformation.ClassName : "";
+        return (
+          <div className={linkClassName} onClick={this.onLinkClickHandle.bind(this, this.props.linkInformation)}>{this.props.linkInformation.DisplayText}</div>
         );
     }
 });

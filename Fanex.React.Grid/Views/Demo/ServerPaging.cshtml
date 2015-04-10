@@ -27,7 +27,7 @@
         <h3>Source</h3>
         <div>            
             - client code:<br />
-            <textarea rows="20" cols="120" readonly="readonly">
+            <textarea rows="20" cols="120">
 function getGridOptionsFromServer() {
    
     var criteria = new FormData();
@@ -68,7 +68,7 @@ function getDataPagingCallBack(pageIndex, pageSize) {
 }
             </textarea> <br />
             - server code:<br />
-            <textarea rows="20" cols="120" readonly="readonly">
+            <textarea rows="20" cols="120">
 public JsonResult ServerPagingData(int numOfRow, int pageIndex = 0, int pageSize = 100)
 {
     var reactService = new FirstPageService();
