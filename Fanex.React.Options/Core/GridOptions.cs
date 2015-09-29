@@ -23,17 +23,24 @@ namespace Fanex.React.Options.Core
             ScrollAreaFixedWidth = 500;
             HeaderStyle = Formatter.HeaderStyle.HeaderOneLine;
             PagingOptions = new PagingOptions();
+            BodyRows = new List<Row>();
             SortColumnIndex = -1;
             SortDirection = string.Empty;
         }
 
         public bool ShowTitle { get; set; }
 
+        public bool IsExportExcel { get; set; }
+
+        public string ExportExcelFunction { get; set; }
+
         public string TitleText { get; set; }
 
         public string NoDataText { get; set; }
 
         public bool ShowFooter { get; set; }
+
+        public bool ShowBreakLine { get; set; }
 
         public bool OddEvenRow { get; set; }
 
@@ -70,6 +77,10 @@ namespace Fanex.React.Options.Core
         public int SortColumnIndex { get; set; }
 
         public string SortDirection { get; set; }
+
+        public bool IsServerSort { get; set; }
+
+        public string SortServerFunction { get; set; }
 
         public bool IsSortOnPage { get; set; }
 

@@ -68,6 +68,9 @@
     <Content Include="css\site.css" />
     <Content Include="css\_layout.css" />
     <Content Include="demo\ClientPaging.htm" />
+    <Content Include="demo\SortData.htm" />
+    <Content Include="demo\RenderLink.htm" />
+    <Content Include="demo\FreezeColumn.htm" />
     <Content Include="demo\LargeData.htm" />
     <Content Include="demo\MergeColumn.htm" />
     <Content Include="demo\ServerPaging.htm" />
@@ -94,6 +97,7 @@
     <Content Include="index.htm" />
     <Content Include="scripts\Demo\demo-client-paging.js" />
     <Content Include="scripts\Demo\demo-first-page.js" />
+    <Content Include="scripts\Demo\demo-freeze-column.js" />
     <Content Include="scripts\Demo\demo-full-grid.js" />
     <Content Include="scripts\Demo\demo-group-header-grid.js" />
     <Content Include="scripts\Demo\demo-highlight-column.js" />
@@ -101,9 +105,11 @@
     <Content Include="scripts\Demo\demo-large-data.js" />
     <Content Include="scripts\Demo\demo-merge-column.js" />
     <Content Include="scripts\Demo\demo-odd-even.js" />
+    <Content Include="scripts\Demo\demo-render-link.js" />
     <Content Include="scripts\Demo\demo-server-paging.js" />
     <Content Include="scripts\Demo\demo-show-footer.js" />
     <Content Include="scripts\Demo\demo-show-title.js" />
+    <Content Include="scripts\Demo\demo-sort-data.js" />
     <Content Include="scripts\Demo\demo.js" />
     <Content Include="src\fanex.react.grid.css" />
     <Content Include="src\fanex.react.grid.js" />

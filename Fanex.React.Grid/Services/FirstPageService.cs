@@ -22,7 +22,7 @@
             var gridOptions = new GridOptions
             {
                 NoDataText = "No data",
-                MaxContentHeight = 250,
+                MaxContentHeight = 500,
                 HeaderStyle = Fanex.React.Options.Formatter.HeaderStyle.HeaderOneLine,
                 HeaderColumns = GetHeader(),
                 BodyRows = bodyRows,
@@ -190,7 +190,7 @@
         private List<Row> GetFooterRows()
         {
             var rows = new List<Row>();
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
                 var colindex = 0;
                 var columns = new List<Column>();

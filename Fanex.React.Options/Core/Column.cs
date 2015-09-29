@@ -30,6 +30,8 @@ namespace Fanex.React.Options.Core
             Value = value;
             CellDataType = cellDataType;
             TextAlign = textAlign;
+            MergeColumnNumber = 1;
+            MergeRowNumber = 1;
         }
 
         public int Index { get; set; }
@@ -39,6 +41,8 @@ namespace Fanex.React.Options.Core
         public int Width { get; set; }
 
         public TextAlign TextAlign { get; set; }
+
+        public string FormatString { get; set; }
 
         public string TDClass { get; set; }
 
@@ -103,6 +107,8 @@ namespace Fanex.React.Options.Core
                         return Value == null ? string.Empty : Math.Abs((decimal)Value).ToString("(0,0.00)");
 
                     case CellDataType.DateTime:
+                        return Value == null || string.IsNullOrEmpty(FormatString) ? string.Empty : ((DateTime)Value).ToString(FormatString);
+                    case CellDataType.DateTimeMdyyyy:
                         return Value == null ? string.Empty : ((DateTime)Value).ToString("M/d/yyyy");
                     case CellDataType.DateTimeMMddyyyy:
                         return Value == null ? string.Empty : ((DateTime)Value).ToString("MM/dd/yyyy");

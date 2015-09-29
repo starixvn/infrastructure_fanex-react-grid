@@ -33,14 +33,18 @@
                - SortColumnList: the list of column will be sorted.<br />
                - SortColumnIndex: column index which is sorted. Default is -1 (no column sorted).<br />
                - SortDirection: 'asc'/'desc'. Default is ''.<br />
-               - IsSortOnPage: Set true if you want sort on paging only. Default is false.<br />
+               - IsServerSort: Set true if you want to sort on server. Default is false.<br />
+               - SortServerFunction: The javascript function call sorted server data. Default is undefined.<br />
+               - IsSortOnPage: Set true if you want to sort on paging only. Default is false.<br />
             If the grid has row index column, set: IsRowIndex = true in Column properties.<br />
             
         <textarea rows="10" cols="100">
 SortColumnList : [1, 2, 3, 4, 5],
 SortColumnIndex: -1,
 SortDirection: '',
-IsSortOnPage: false,
+IsServerSort: true,
+SortServerFunction: functionName,
+IsSortOnPage: false
 
 
 - column:

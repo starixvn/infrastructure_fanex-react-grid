@@ -60,7 +60,8 @@ function getGridOptionsFromClient() {
                 {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right","CellClass":""},
                 {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right","CellClass":""}
             ]
-        }]
+        }
+        ]
     };
     
     React.render(

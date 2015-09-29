@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.React.Options", "Fane
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.React.Grid.Demo", "Fanex.React.Grid.Demo\Fanex.React.Grid.Demo.csproj", "{69CE3D3F-EFED-4B5E-9DA2-A67EED9E0B36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.React.Grid.Release", "Fanex.React.Grid.Release\Fanex.React.Grid.Release.csproj", "{370CD48C-4ED8-42F9-A3BA-91770C14EAF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{69CE3D3F-EFED-4B5E-9DA2-A67EED9E0B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69CE3D3F-EFED-4B5E-9DA2-A67EED9E0B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69CE3D3F-EFED-4B5E-9DA2-A67EED9E0B36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{370CD48C-4ED8-42F9-A3BA-91770C14EAF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{370CD48C-4ED8-42F9-A3BA-91770C14EAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{370CD48C-4ED8-42F9-A3BA-91770C14EAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{370CD48C-4ED8-42F9-A3BA-91770C14EAF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

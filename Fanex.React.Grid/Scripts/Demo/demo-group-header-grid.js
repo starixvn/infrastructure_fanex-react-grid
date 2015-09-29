@@ -115,3 +115,9 @@ function generateData(numOfRows){
 
     return bodyRows;
 }
+
+
+function hideDemo(){
+    document.getElementById('react-grid-server').innerHTML = "";
+    document.getElementById('react-grid-client').innerHTML = "";
+}

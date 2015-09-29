@@ -19,6 +19,8 @@ function getGridOptionsFromServer() {
 function getGridOptionsFromClient() {
     var gridOptions = {
         ShowTitle: true,
+        IsExportExcel: true,
+        ExportExcelFunction: exportExcelFunction,
         TitleText: 'Grid - show title - demo',
         NoDataText: "No data.",
         ShowFooter: false,
@@ -82,4 +84,8 @@ function generateData(numOfRows){
     }
 
     return bodyRows;
+}
+
+var exportExcelFunction = function(){
+    alert("Excel");
 }

@@ -85,9 +85,14 @@ namespace Fanex.React.Options.Formatter
         PercentageRedParenthesesNegative = 33,
 
         /// <summary>
-        /// Cell Data Type: Date Time.
+        /// Cell Data Type: Date Time. Follow Format String.
         /// </summary>
         DateTime = 4,
+
+        /// <summary>
+        /// Cell Data Type: Date Time. Ex: 1/1/2015.
+        /// </summary>
+        DateTimeMdyyyy = 44,
 
         /// <summary>
         /// Cell Data Type: Date Time. Ex: 01/01/2015.

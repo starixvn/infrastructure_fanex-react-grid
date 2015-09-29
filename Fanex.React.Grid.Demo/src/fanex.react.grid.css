@@ -48,7 +48,11 @@ div.react-header
 div.react-header div.div-react-header
 {
     float:left;
-    padding-right: 17px;
+    padding-right: 19px;
+}
+.div-react-freeze-fixed {
+	display: inline-block;
+	
 }
 div.react-header div.div-react-header table
 {
@@ -65,7 +69,17 @@ table.react-header .header-row th {
     vertical-align: middle;            
     font-size: 14px;
 }
-
+table.react-header .header-row th .react-header-text{
+    display: inline;	
+}
+table.react-header .header-row th .react-sort-icon {
+	margin: 0 2px;
+	height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    cursor: pointer;	
+}
 table.react-header .header-row th.header-line-1 {
 	line-height: 25px;
 }
@@ -89,11 +103,6 @@ div.react-data table
     outline-style:none;
     table-layout: fixed;
     border-collapse: collapse;
-}
-
-div.react-data table tr.hover-row:hover
-{
-    
 }
 
 div.react-data table tr.content-row td
@@ -125,7 +134,7 @@ div.react-footer
 div.react-footer div.div-react-footer
 {
     float:left;
-    padding-right: 17px;    
+    padding-right: 19px;    
 }
 
 div.react-footer div.div-react-footer table
@@ -195,8 +204,8 @@ table.react-footer .footer-row td div {
 	
 }
 .react-paging .button-icon .ui-icon {
-	 margin: 0 4px;
-	 height: 16px;
+	margin: 0 4px;
+	height: 16px;
     width: 16px;
     background-repeat: no-repeat;
     display: block;
@@ -205,6 +214,10 @@ table.react-footer .footer-row td div {
 }
 
 /* ------------------------------------custom css area --------------------------------------*/
+.react-grid-link {
+	cursor: pointer;
+	color: #0033ff;
+}
 .react-title {
 	background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;
     border: 1px solid #a3d1e1;
@@ -221,7 +234,17 @@ table.react-header .header-row th {
 table.react-header .header-row-bottom th {        
     border-top: 1px solid #a3d1e1;
 }
-
+table.react-header .header-row th .react-sort-icon {	
+	background-image: url("images/ui-icons_e0fdff_256x240.png");
+}
+table.react-header .header-row th .desc
+{
+    background-position: -64px -192px;
+}
+table.react-header .header-row th .asc 
+{
+    background-position: -96px -192px;
+}
 .react-data {
 	background: url("images/ui-bg_inset-hard_100_fcfdfd_1x100.png") repeat-x scroll 50% bottom #fcfdfd;
 	border: 1px solid #a6c9e2;
@@ -242,6 +265,21 @@ div.react-data table tr.content-row td
 }
 div.react-data table tr.odd-row {
 	background-color: #eeeeee;
+}
+
+.div-react-scroll {
+	border-right: 1px solid #a3d1e1;
+	border-bottom: 1px solid #a3d1e1;
+}
+.react-grid-scroll-area {
+	border-right: 1px solid #a3d1e1;
+}
+.div-react-scroll-bar-freeze {
+	border-left: 1px solid #a3d1e1;
+}
+.div-react-scroll-bar-scroll {
+	border-left: 1px solid #a3d1e1;
+	border-right: 1px solid #a3d1e1;
 }
 
 .footer-border-top {
