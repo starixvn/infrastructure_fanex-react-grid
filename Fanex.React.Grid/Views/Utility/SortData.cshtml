@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "FreezeColumn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Utility/demo-sort-data.js")"></script>
+}
+<ul>
+    <li>
+        <h3>
+            Demo - Sort Data</h3>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-row" value="220" />
+           
+            <input type="button" value="Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />
+            @*<input type="button" value="Get full data" onclick="getFullData();" />*@
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h3>
+            Source</h3>
+            Sort data grid. <br />
+            Set: <br />
+               - SortColumnList: the list of column will be sorted.<br />
+               - SortColumnIndex: column index which is sorted. Default is -1 (no column sorted).<br />
+               - SortDirection: 'asc'/'desc'. Default is ''.<br />
+               - IsServerSort: Set true if you want to sort on server. Default is false.<br />
+               - SortServerFunction: The javascript function call sorted server data. Default is undefined.<br />
+               - IsSortOnPage: Set true if you want to sort on paging only. Default is false.<br />
+            If the grid has row index column, set: IsRowIndex = true in Column properties.<br />
+            
+        <textarea rows="10" cols="100">
+SortColumnList : [1, 2, 3, 4, 5],
+SortColumnIndex: -1,
+SortDirection: '',
+IsServerSort: true,
+SortServerFunction: functionName,
+IsSortOnPage: false
+
+
+- column:
+{"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center","CellClass":"","IsRowIndex": true},
+        </textarea><br />
+    </li>
+</ul>

@@ -38,8 +38,16 @@
 .react-title .right-icons {
 	float: right;
 	display: inline;	
-	padding: 7px;
+	padding: 6px;
 }
+.react-title .right-icons .excel-icon
+{
+    background-image: url("images/excel.gif");
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+
 div.react-header
 {
     color:#ffffff;
@@ -48,7 +56,11 @@ div.react-header
 div.react-header div.div-react-header
 {
     float:left;
-    padding-right: 17px;
+    padding-right: 19px;
+}
+.div-react-freeze-fixed {
+	display: inline-block;
+	
 }
 div.react-header div.div-react-header table
 {
@@ -65,8 +77,18 @@ table.react-header .header-row th {
     vertical-align: middle;            
     font-size: 14px;
 }
-
-table.react-header .header-row th.header-line-1 {
+table.react-header .header-row th .react-header-text{
+    display: inline;	
+}
+table.react-header .header-row th .react-sort-icon {
+	margin: 0 2px;
+	height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    cursor: pointer;	
+}
+table.react-header .header-row,.header-row-bottom th.header-line-1 {
 	line-height: 25px;
 }
 
@@ -91,16 +113,11 @@ div.react-data table
     border-collapse: collapse;
 }
 
-div.react-data table tr.hover-row:hover
-{
-    
-}
-
 div.react-data table tr.content-row td
 {
     height:auto;
     min-height:22px;
-    padding:4px 0px;    
+    padding:2px 0px;    
     vertical-align: middle;
     border-right: 1px solid inherit;
     border-bottom: 1px solid inherit;
@@ -125,7 +142,7 @@ div.react-footer
 div.react-footer div.div-react-footer
 {
     float:left;
-    padding-right: 17px;    
+    padding-right: 19px;    
 }
 
 div.react-footer div.div-react-footer table
@@ -174,6 +191,12 @@ table.react-footer .footer-row td div {
     float: left;
 	
 }
+.react-paging .paging-control select
+{
+    width: 50px !important;
+    height: 22px !important;
+    padding: 0 !important;
+}
 .react-paging .paging-info
 {
     float: right;
@@ -189,8 +212,8 @@ table.react-footer .footer-row td div {
 	
 }
 .react-paging .button-icon .ui-icon {
-	 margin: 0 4px;
-	 height: 16px;
+	margin: 0 4px;
+	height: 16px;
     width: 16px;
     background-repeat: no-repeat;
     display: block;
@@ -199,15 +222,25 @@ table.react-footer .footer-row td div {
 }
 
 /* ------------------------------------custom css area --------------------------------------*/
+.react-grid-link {
+	cursor: pointer;
+	color: #0033ff;
+}
 .react-title {
-	background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;
+	/*background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;*/
+	background-color: #e14f1c;
     border: 1px solid #a3d1e1;
+}
+.react-title .react-title-text 
+{
+    color: #ffffff;
 }
 
 div.react-header 
 {
-    background: url("images/ui-bg_glass_45_0078ae_1x400.png") repeat-x scroll 50% 50% #0078ae;
-    border: 1px solid #d3d3d3;
+    /*background: url("images/ui-bg_glass_45_0078ae_1x400.png") repeat-x scroll 50% 50% #0078ae;*/
+    background-color: #0078ae;
+    border: 1px solid #0078ae;
 }
 table.react-header .header-row th {        
     border-right: 1px solid #a3d1e1;
@@ -215,14 +248,26 @@ table.react-header .header-row th {
 table.react-header .header-row-bottom th {        
     border-top: 1px solid #a3d1e1;
 }
-
+table.react-header .header-row th .react-sort-icon {	
+	background-image: url("images/ui-icons_e0fdff_256x240.png");
+}
+table.react-header .header-row th .desc
+{
+    background-position: -64px -192px;
+}
+table.react-header .header-row th .asc 
+{
+    background-position: -96px -192px;
+}
 .react-data {
-	background: url("images/ui-bg_inset-hard_100_fcfdfd_1x100.png") repeat-x scroll 50% bottom #fcfdfd;
+	/*background: url("images/ui-bg_inset-hard_100_fcfdfd_1x100.png") repeat-x scroll 50% bottom #fcfdfd;*/
+	background-color: #fcfdfd;
 	border: 1px solid #a6c9e2;
 	color: #222222;
 }
 div.react-data table .row-highlight {
-	background: url("images/ui-bg_glass_55_f8da4e_1x400.png") repeat-x scroll 50% 50% #f8da4e;
+	/*background: url("images/ui-bg_glass_55_f8da4e_1x400.png") repeat-x scroll 50% 50% #f8da4e;*/
+	background-color: #f8da4e;
 	border: 1px solid #fcd113;
 }
 div.react-data table tr.content-row:first-child {
@@ -238,12 +283,30 @@ div.react-data table tr.odd-row {
 	background-color: #eeeeee;
 }
 
+.div-react-scroll {
+	border-right: 1px solid #a3d1e1;
+	border-bottom: 1px solid #a3d1e1;
+}
+.react-grid-scroll-area {
+	border-right: 1px solid #a3d1e1;
+}
+.div-react-scroll-bar-freeze {
+	border-left: 1px solid #a3d1e1;
+}
+.div-react-scroll-bar-scroll {
+	border-left: 1px solid #a3d1e1;
+	border-right: 1px solid #a3d1e1;
+}
+
 .footer-border-top {
-	background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;
+	/*background: url("images/ui-bg_gloss-wave_45_e14f1c_500x100.png") repeat-x scroll 50% 50% #e14f1c;*/
+	background-color: #e14f1c;
 }
 .div-react-footer {
-	background: url("images/ui-bg_gloss-wave_75_2191c0_500x100.png") repeat-x scroll 50% 50% #2191c0;
+	/*background: url("images/ui-bg_gloss-wave_75_2191c0_500x100.png") repeat-x scroll 50% 50% #2191c0;*/
+	background-color: #2191c0;
 	border: 1px solid #4297d7;
+	border-top: none;
 	font-weight: bold;	
 }
 .div-react-footer .react-footer .footer-row td {
@@ -253,13 +316,15 @@ div.react-data table tr.odd-row {
 }
 
 .react-paging {
-	background: url("images/ui-bg_gloss-wave_50_6eac2c_500x100.png") repeat-x scroll 50% 50% #6eac2c;
+	/*background: url("images/ui-bg_gloss-wave_50_6eac2c_500x100.png") repeat-x scroll 50% 50% #6eac2c;*/
+	background-color: #6eac2c;
 	border: 1px solid #acdd4a;
 	color: #ffffff;
 }
 .react-paging .button-icon
 {
-    background: url("images/ui-bg_glass_45_0078ae_1x400.png") repeat-x scroll 50% 50% #0078ae;   
+    /*background: url("images/ui-bg_glass_45_0078ae_1x400.png") repeat-x scroll 50% 50% #0078ae;*/
+    background-color: #0078ae;  
     color: #ffffff;
 }
 .react-paging .button-icon .ui-icon-seek-first {

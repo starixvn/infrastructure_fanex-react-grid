@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "LargeData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-large-data.js")"></script>
+}
+<ul>
+    <li>
+        <h3>Demo - 1 Million Rows</h3>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-rows" value="1000000" />
+            <input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />
+            @*<input type="button" value="Get full data" onclick="getFullData();" />*@
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h3>Source</h3>
+        <div>            
+            - set the properties:<br />
+            <textarea rows="2" cols="120">
+IsRenderLargeData: true,
+RenderLargeDataCallBack: a function
+            </textarea> <br />
+            - If render at client: not set RenderLargeDataCallBack <br />
+            - If render at server: set RenderLargeDataCallBack is a function that call the continuous data of the grid.   
+        </div>
+    </li>
+</ul>

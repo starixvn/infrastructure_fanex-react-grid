@@ -85,9 +85,14 @@ namespace Fanex.React.Options.Formatter
         PercentageRedParenthesesNegative = 33,
 
         /// <summary>
-        /// Cell Data Type: Date Time.
+        /// Cell Data Type: Date Time. Follow Format String.
         /// </summary>
         DateTime = 4,
+
+        /// <summary>
+        /// Cell Data Type: Date Time. Ex: 1/1/2015.
+        /// </summary>
+        DateTimeMdyyyy = 44,
 
         /// <summary>
         /// Cell Data Type: Date Time. Ex: 01/01/2015.
@@ -103,12 +108,17 @@ namespace Fanex.React.Options.Formatter
         /// <summary>
         /// Cell Data Type: Date Time. Ex: 1/1/2015.
         /// </summary>
-        DateTimeMdyyyy = 42,
+        DateTimedMyyyy = 42,
 
         /// <summary>
         /// Cell Data Type: Date Time. Ex: January 01, 2015.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Justification = "Reviewed.")]
         DateTimeMmmmddyyyy = 43,
+
+        /// <summary>
+        /// Link type.
+        /// </summary>
+        Link = 5,
     }
 }

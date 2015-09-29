@@ -1,22 +1,32 @@
 ﻿@{
     ViewBag.Title = "GettingStarted";
+    ViewBag.ActiveLink = "GettingStarted";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Getting started</h2>
+<h2>
+    Getting started</h2>
 <ul>
     <li>
-        <h3>Dependency: </h3>
-        <textarea rows="2" cols="100" readonly="readonly"><script type="text/javascript" src="@Url.Content("~/dependency/react.js")"></script>    
-<script type="text/javascript" src="@Url.Content("~/dependency/JSXTransformer.js")"></script></textarea>
+        <h3>
+            Dependency:
+        </h3>
+        <textarea rows="2" cols="100">
+<script type="text/javascript" src="@Url.Content("~/dependency/react.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/dependency/JSXTransformer.js")"></script>
+        </textarea>
     </li>
     <li>
-        <h3>Install Fanex.React.Grid</h3>
-        <textarea rows="2" cols="100" readonly="readonly"><link type="text/css" href="@Url.Content("~/src/fanex.react.grid.css")" rel="stylesheet" />
+        <h3>
+            Install Fanex.React.Grid</h3>
+        <textarea rows="2" cols="100"><link type="text/css" href="@Url.Content("~/src/fanex.react.grid.css")" rel="stylesheet" />
 <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script></textarea>
     </li>
     <li>
-        <h3>Server Grid Options</h3>
-        If you want to render grid's options in server code. You could use "Fanex.React.Options" library built at the same package with Fanex.React.Grid component.
+        <h3>
+            Server Grid Options</h3>
+        If you want to render grid's options in server code (encouraged). You could use "Fanex.React.Options"
+        library built at the same package with Fanex.React.Grid component. </li>
+    <li><h3>Download</h3>
+        <a href="http://10.18.200.209:8586/ReactGrid/download/fanex.react.grid.demo.zip">Fanex.React.Grid</a>
     </li>
 </ul>

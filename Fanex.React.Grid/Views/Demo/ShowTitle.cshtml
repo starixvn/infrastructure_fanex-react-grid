@@ -1,14 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "ShowTitle";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section css
-{
-    <link href="@Url.Content("~/src/fanex.react.grid.css")" type="text/css" rel="stylesheet" />
-}
-@section jsx
-{
-    <script type="text/jsx" src="@Url.Content("~/src/fanex.react.grid.js")"></script>
 }
 @section js
 {
@@ -16,7 +9,7 @@
 }
 <ul>
     <li>
-        <h2>Demo</h2>
+        <h3>Demo - Show Title</h3>
         <div>
             Num of row:
             <input type="text" id="num-of-row" value="220" />
@@ -31,10 +24,10 @@
         </div>
     </li>
     <li>
-        <h2>Source</h2>
+        <h3>Source</h3>
         <div>            
             - set 2 properties:<br />
-            <textarea rows="3" cols="100" readonly="readonly">
+            <textarea rows="3" cols="100">
 ShowTitle: true,
 TitleText: 'Grid - show title - demo',
             </textarea>

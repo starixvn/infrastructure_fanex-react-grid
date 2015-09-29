@@ -1,8 +1,8 @@
 ﻿/* File Created: March 26, 2015 */
 .container {
 	float: left;
-	min-height: 900px;
-	border: 1px solid #cccccc;
+	/*min-height: 900px;*/
+	/*border: 1px solid #cccccc;*/
 }
 .left-panel {
 	width: 150px;
@@ -11,11 +11,41 @@
 .right-panel {
 	width: 1070px;
 	margin-left: 10px;
-	max-height: 900px;
-	overflow-y:auto;
+	
 	padding-left: 5px;
 	padding-top: 5px;
+	border-left: 1px solid #cccccc;
+}
+input {
+	line-height:25px;
+	margin-bottom: 0px !important;
+}
+input[type=button] {
+	background-color: #0078ae;
+	font-weight: bold;
+	color: #ffffff;
+	cursor: pointer;    
+}
+input[type=button]:hover
+{
+    border: 2px solid #0078ae;
 }
 ul li {
 	color: #222222;
 }
+ul li textarea {
+	background-color: #eeeeee;
+	width: 95%;
+    font-size: 11px;
+}
+ol li a {
+	line-height: 30px;
+	text-decoration: none;
+	color: #0033ff;
+}
+ol li:hover {
+	background-color: #dddddd;
+	cursor: pointer;
+	
+}
+

@@ -71,10 +71,38 @@
             return json;
         }
 
-        public JsonResult GetData(int numOfRow, int pageIndex = 0, int pageSize = 100)
+        public ActionResult MergeColumn()
         {
-            var reactService = new DemoService();
-            var data = reactService.GetReactGridOptions(numOfRow, pageIndex, pageSize);            
+            return View();
+        }
+
+        public JsonResult MergeColumnData(int numOfRow)
+        {
+            var reactService = new FirstPageService();
+            var data = reactService.GetMergeColumnGridOptions(numOfRow);
+            var json = Json(data);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+        public ActionResult LargeData()
+        {
+            return View();
+        }
+
+        public JsonResult GetLargeData(int numOfRow, int startIndex = 0, int endIndex = 100)
+        {
+            var reactService = new FirstPageService();
+            var data = reactService.GetLargeGridOptions(numOfRow, startIndex, endIndex);
+            var json = Json(data);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+        public JsonResult GetData(int numOfRow)
+        {
+            var reactService = new FirstPageService();
+            var data = reactService.GetReactGridOptions(numOfRow);
             var json = Json(data);
             json.MaxJsonLength = int.MaxValue;
             return json;

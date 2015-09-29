@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Index";
+    ViewBag.ActiveLink = "MergeColumn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section js
+{
+    <script type="text/jsx" src="@Url.Content("~/Scripts/Demo/demo-merge-column.js")"></script>
+}
+<ul>
+    <li>
+        <h3>Demo - Merge Cell</h3>
+        <div>
+            Num of row:
+            <input type="text" id="num-of-row" value="220" />
+            @*<input type="button" value="Server Render" onclick="getGridOptionsFromServer();" />
+            <input type="button" value="Client Render" onclick="getGridOptionsFromClient();" />*@
+            <input type="button" value="Render" onclick="getGridOptionsFromClient();" />
+            <input type="button" value="Hide" onclick="hideDemo();" />
+        </div>
+        <div id="react-grid-server">
+        </div>
+        <div id="react-grid-client">
+        </div>
+    </li>
+    <li>
+        <h3>Source</h3>
+        <div>            
+            - set the property:<br />
+            <textarea rows="2" cols="120">
+MergeColumnNumber: an integer number which is between 2 and 'number of columns' after this column.
+MergeRowNumber: an integer number which is between 2 and 'number of rows' after this row.
+            </textarea> <br />
+            - client code:<br />
+            <textarea rows="20" cols="120">
+function generateData(numOfRows){
+    var bodyRows = [];
+    for(var i = 0; i< numOfRows;i++){
+        var mergeRowNumber = i % 10 == 0 && i < numOfRows - 4 ? 3 : 1;
+        var mergeColumnNumber = i % 10 == 0 ? 3 : 1;
+        var columns = [
+            {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center"},
+            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center"},
+            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left"},
+            {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right"},
+            {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right"},
+            {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right"}
+        ];
+        var row = {
+            RowIndex: i,
+            Columns: columns
+        };
+        bodyRows.push(row);
+    }
+
+    return bodyRows;
+}
+
+function generateFooter(){
+    var footerRows = [];
+    for(var i = 0; i< 2;i++){
+        var mergeRows = i==0?2:1;
+        var columns = [
+            {"Index":0,"Value":1,"MergeColumnNumber":2,"MergeRowNumber":mergeRows,"TextAlignment":"center","DisplayText":"Total"},
+            {"Index":2,"Value":"","TextAlignment":"left","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
+            {"Index":3,"Value":330243,"TextAlignment":"right","DisplayText":"330,243"},
+            {"Index":4,"Value":10906.0248046955,"TextAlignment":"right","DisplayText":"10,906.02"},
+            {"Index":5,"Value":0.0330242421631814,"TextAlignment":"right","DisplayText":"330.24%"}
+        ];
+        var row = {
+            RowIndex: i,
+            Columns: columns
+        };
+        footerRows.push(row);
+    }
+
+    return footerRows;
+}
+            </textarea> <br />            
+        </div>
+    </li>
+</ul>

@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{370CD48C-4ED8-42F9-A3BA-91770C14EAF3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.React.Grid.Release</RootNamespace>
+    <AssemblyName>Fanex.React.Grid.Release</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Release\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Release\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Release\bootstrap\css\bootstrap.css" />
+    <Content Include="Release\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Release\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Release\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Release\bootstrap\js\bootstrap.js" />
+    <Content Include="Release\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Release\css\images\bg_boxTop.jpg" />
+    <Content Include="Release\css\images\bg_buttonsite.jpg" />
+    <Content Include="Release\css\images\grid-layout.PNG" />
+    <Content Include="Release\css\images\icon_content.gif" />
+    <Content Include="Release\css\images\icon_title.gif" />
+    <Content Include="Release\css\images\tab_topbg.gif" />
+    <Content Include="Release\css\site.css" />
+    <Content Include="Release\css\_layout.css" />
+    <Content Include="Release\demo\ClientPaging.htm" />
+    <Content Include="Release\demo\FirstGrid.htm" />
+    <Content Include="Release\demo\FreezeColumn.htm" />
+    <Content Include="Release\demo\GettingStarted.htm" />
+    <Content Include="Release\demo\GroupHeader.htm" />
+    <Content Include="Release\demo\HighlightColumn.htm" />
+    <Content Include="Release\demo\HighlightHover.htm" />
+    <Content Include="Release\demo\LargeData.htm" />
+    <Content Include="Release\demo\MergeColumn.htm" />
+    <Content Include="Release\demo\OddEven.htm" />
+    <Content Include="Release\demo\Overview.htm" />
+    <Content Include="Release\demo\RenderLink.htm" />
+    <Content Include="Release\demo\ServerPaging.htm" />
+    <Content Include="Release\demo\ShowFooter.htm" />
+    <Content Include="Release\demo\ShowTitle.htm" />
+    <Content Include="Release\demo\SortData.htm" />
+    <Content Include="Release\dependency\JSXTransformer.js" />
+    <Content Include="Release\dependency\react.js" />
+    <Content Include="Release\dest\fanex.react.grid.min.css" />
+    <Content Include="Release\dest\fanex.react.grid.min.js" />
+    <Content Include="Release\dest\images\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="Release\dest\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Release\dest\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Release\dest\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="Release\dest\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="Release\dest\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Release\dest\images\ui-icons_e0fdff_256x240.png" />
+    <Content Include="Release\index.htm" />
+    <Content Include="Release\scripts\Demo\demo-client-paging.js" />
+    <Content Include="Release\scripts\Demo\demo-first-page.js" />
+    <Content Include="Release\scripts\Demo\demo-freeze-column.js" />
+    <Content Include="Release\scripts\Demo\demo-full-grid.js" />
+    <Content Include="Release\scripts\Demo\demo-group-header-grid.js" />
+    <Content Include="Release\scripts\Demo\demo-highlight-column.js" />
+    <Content Include="Release\scripts\Demo\demo-highlight-hover.js" />
+    <Content Include="Release\scripts\Demo\demo-large-data.js" />
+    <Content Include="Release\scripts\Demo\demo-merge-column.js" />
+    <Content Include="Release\scripts\Demo\demo-odd-even.js" />
+    <Content Include="Release\scripts\Demo\demo-render-link.js" />
+    <Content Include="Release\scripts\Demo\demo-server-paging.js" />
+    <Content Include="Release\scripts\Demo\demo-show-footer.js" />
+    <Content Include="Release\scripts\Demo\demo-show-title.js" />
+    <Content Include="Release\scripts\Demo\demo-sort-data.js" />
+    <Content Include="Release\scripts\Demo\demo.js" />
+    <Content Include="Release\src\fanex.react.grid.css" />
+    <Content Include="Release\src\fanex.react.grid.js" />
+    <Content Include="Release\src\images\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="Release\src\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Release\src\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Release\src\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="Release\src\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="Release\src\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Release\src\images\ui-icons_e0fdff_256x240.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

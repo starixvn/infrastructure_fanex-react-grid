@@ -19,6 +19,8 @@ function getGridOptionsFromServer() {
 function getGridOptionsFromClient() {
     var gridOptions = {
         ShowTitle: true,
+        IsExportExcel: true,
+        ExportExcelFunction: exportExcelFunction,
         TitleText: 'Grid - show title - demo',
         NoDataText: "No data.",
         ShowFooter: false,
@@ -41,12 +43,12 @@ function getGridOptionsFromClient() {
         HeaderStyle: 1,
         GroupHeaders: [],
         HeaderColumns: [
-            {"Index":0,"Name":"ColumnIndex","Width":60,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"#","TextAlign":2,"TdClass":null},
-            {"Index":1,"Name":"ColumnDate","Width":100,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Date","TextAlign":2,"TdClass":null},
-            {"Index":2,"Name":"ColumnText","Width":250,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Text","TextAlign":2,"TdClass":null},
-            {"Index":3,"Name":"ColumnInteger","Width":100,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Integer","TextAlign":2,"TdClass":null},
-            {"Index":4,"Name":"ColumnDecimal","Width":150,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Decimal","TextAlign":2,"TdClass":null},
-            {"Index":5,"Name":"ColumnPercentage","Width":150,"MergeColumnNumber":1,"MergeRowNumber":1,"Text":"Percentage","TextAlign":2,"TdClass":null}
+            {"Index":0,"Text":"#","TdClass":null},
+            {"Index":1,"Text":"Date","TdClass":null},
+            {"Index":2,"Text":"Text","TdClass":null},
+            {"Index":3,"Text":"Integer","TdClass":null},
+            {"Index":4,"Text":"Decimal","TdClass":null},
+            {"Index":5,"Text":"Percentage","TdClass":null}
         ],
         BodyRows: generateData(document.getElementById("num-of-row").value),
         FooterRows: []
@@ -67,12 +69,12 @@ function generateData(numOfRows){
     var bodyRows = [];
     for(var i = 0; i< numOfRows;i++){
         var columns = [
-            {"Index":0,"Name":"ColumnIndex","Value":1,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":i+1},
-            {"Index":1,"Name":"ColumnDate","Value":"/Date(950547600000)/","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"center","CellClass":"","DisplayText":"Feb 15, 2000"},
-            {"Index":2,"Name":"ColumnText","Value":"041bb9832-1494-4bee-8529-70c29bc3026f","MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"left","CellClass":"","DisplayText":"041bb9832-1494-4bee-8529-70c29bc3026f"},
-            {"Index":3,"Name":"ColumnInteger","Value":330243,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330,243"},
-            {"Index":4,"Name":"ColumnDecimal","Value":10906.0248046955,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"10,906.02"},
-            {"Index":5,"Name":"ColumnPercentage","Value":0.0330242421631814,"MergeColumnNumber":1,"MergeRowNumber":1,"IsHightLight":false,"TextAlignment":"right","CellClass":"","DisplayText":"330.24%"}
+            {"Index":0,"CellDataType":CellDataType.Integer,"Value":i+1,"TextAlignment":"center","CellClass":""},
+            {"Index":1,"CellDataType":CellDataType.DateTimeMMMdyyyy,"Value":"01/02/2015","TextAlignment":"center","CellClass":""},
+            {"Index":2,"CellDataType":CellDataType.Text,"Value":"041bb9832-1494-4bee-8529-70c29bc3026f","TextAlignment":"left","CellClass":""},
+            {"Index":3,"CellDataType":CellDataType.Integer,"Value":330243,"TextAlignment":"right","CellClass":""},
+            {"Index":4,"CellDataType":CellDataType.DecimalRedPositive,"Value":10906.0248046955,"TextAlignment":"right","CellClass":""},
+            {"Index":5,"CellDataType":CellDataType.PercentageRedNegative,"Value":0.0330242421631814,"TextAlignment":"right","CellClass":""}
         ];
         var row = {
             RowIndex: i,
@@ -82,4 +84,8 @@ function generateData(numOfRows){
     }
 
     return bodyRows;
+}
+
+var exportExcelFunction = function(){
+    alert("Excel");
 }
