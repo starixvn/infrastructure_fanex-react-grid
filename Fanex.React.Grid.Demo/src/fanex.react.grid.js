@@ -873,7 +873,7 @@ var ReactHelper = {
         if(numOfFreeze<1){
             gridOptions.ScrollAreaFixedWidth=width;
         } else {
-            gridOptions.ScrollAreaFixedWidth=gridOptions.MaxContentWidth-gridOptions.FreezeAreaWidth-22;
+            gridOptions.ScrollAreaFixedWidth=gridOptions.MaxContentWidth-gridOptions.FreezeAreaWidth-24;
         }
 
         var gridWidth=0;

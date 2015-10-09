@@ -260,7 +260,7 @@ var ReactHeader = React.createClass({
                     groupHeaderScroll.push(groupHeader[index]);
                 }
             }
-
+            
             groupHeaderFreezeNodes = groupHeaderFreeze.map(function (item, i) {
                 var className = "header-line-" + (headerFreezeColumns.length === 0 ? "2 " : "1 ");
                 className += item.TDClass != null || item.TDClass != undefined ? item.TDClass : '';
@@ -283,6 +283,7 @@ var ReactHeader = React.createClass({
                     </th>
                 );
             });
+            console.log(groupHeaderScrollNodes);
             reactHeaderHeigth=51;
             headerBottomClassName += " header-row-bottom";
         }
@@ -303,7 +304,7 @@ var ReactHeader = React.createClass({
                         </table>
                     </div>
                 </div>
-                <div className="div-react-freeze-fixed react-grid-scroll-area" style={{"width" : gridOptions.ScrollAreaFixedWidth,overflowX: "hidden"}} id={containerId+"-scroll-bar-header"}>
+                <div className="div-react-freeze-fixed react-grid-scroll-area" style={{"width" : gridOptions.ScrollAreaFixedWidth-2,overflowX: "hidden"}} id={containerId+"-scroll-bar-header"}>
                     <div className="div-react-header-scroll" style={{"width" : gridOptions.ScrollAreaWidth+3}}>
                         <table className="react-header" cellPadding="0" cellSpacing="0">
                             <thead>
@@ -626,7 +627,7 @@ var ReactFooter = React.createClass({
                         </table>
                     </div>
                 </div>
-                <div className="div-react-freeze-fixed react-grid-scroll-area" style={{"width" : gridOptions.ScrollAreaFixedWidth,overflowX: "hidden"}} id={containerId+"-scroll-bar-footer"}>
+                <div className="div-react-freeze-fixed react-grid-scroll-area" style={{"width" : gridOptions.ScrollAreaFixedWidth-2,overflowX: "hidden"}} id={containerId+"-scroll-bar-footer"}>
                     <div className="div-react-footer-scroll" style={{"width" : gridOptions.ScrollAreaWidth+3}}>
                         <table className="react-footer" cellPadding="0" cellSpacing="0">
                             <tbody>
@@ -895,7 +896,7 @@ var ReactHelper = {
         if(numOfFreeze<1){
             gridOptions.ScrollAreaFixedWidth=width;
         } else {
-            gridOptions.ScrollAreaFixedWidth=gridOptions.MaxContentWidth-gridOptions.FreezeAreaWidth-22;
+            gridOptions.ScrollAreaFixedWidth=gridOptions.MaxContentWidth-gridOptions.FreezeAreaWidth-20;
         }
 
         var gridWidth=0;

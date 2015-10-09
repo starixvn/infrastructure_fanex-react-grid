@@ -9,7 +9,7 @@
     {
         public ActionResult Index()
         {
-            return View();
+            return View("~/Views/Home/Overview.cshtml");
         }
 
         public ActionResult Overview()
